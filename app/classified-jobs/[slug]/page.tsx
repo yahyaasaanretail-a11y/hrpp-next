@@ -1,6 +1,12 @@
 // app/jobs/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
 export const revalidate = 60;
 
 async function getJob(slug: string) {
