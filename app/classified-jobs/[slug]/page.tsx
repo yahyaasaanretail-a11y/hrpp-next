@@ -1,10 +1,10 @@
 // app/jobs/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 
-interface PageProps {
-  params: {
+interface ClassifiedJobPageProps {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export const revalidate = 60;
@@ -18,8 +18,10 @@ async function getJob(slug: string) {
   return res.json();
 }
 
-export default async function ClassifiedJobPage({ params }: PageProps) {
-  const job = await getJob(params.slug);
+export default async function ClassifiedJobPage({ params }: ClassifiedJobPageProps) {
+  const { slug } = await params; // Await params because Next.js may pass it as a Promise
+  
+  const job = await getJob(slug);
   if (!job) notFound();
 
   return (
