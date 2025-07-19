@@ -18,7 +18,7 @@ async function getJob(slug: string) {
   return res.json();
 }
 
-export default async function JobDetailPage({ params }: { params: { slug: string } }) {
+export default async function ClassifiedJobPage({ params }: PageProps) {
   const job = await getJob(params.slug);
   if (!job) notFound();
 
