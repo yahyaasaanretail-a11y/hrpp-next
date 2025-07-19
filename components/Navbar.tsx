@@ -51,6 +51,10 @@ const Navbar = () => {
             About Us
           </Link>
 
+          <Link href="/classified-jobs" className="text-gray-700 hover:text-blue-600 font-semibold">
+            Classified Jobs
+          </Link>
+
           <div className="relative inline-block">
             <button
               ref={buttonRef}
