@@ -2,9 +2,14 @@
 import JobListSection from '@/app/classified-jobs/JobListSection';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 60;
+interface PageProps {
+    params: {
+      page: string;
+    };
+  }
 
-export default async function PaginatedJobsPage({ params }: { params: { page: string } }) {
+export const revalidate = 60;
+export default async function PaginatedJobsPage({ params }: PageProps) {
   const currentPage = parseInt(params.page, 10);
 
   if (isNaN(currentPage) || currentPage < 1) {
