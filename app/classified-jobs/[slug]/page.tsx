@@ -10,7 +10,7 @@ interface ClassifiedJobPageProps {
 export const revalidate = 60;
 
 async function getJob(slug: string) {
-  const res = await fetch(`http://localhost:8000/api/jobs/${slug}`, {
+  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs/${slug}`, {
     next: { revalidate: 60 },
   });
 
@@ -30,7 +30,7 @@ export default async function ClassifiedJobPage({ params }: ClassifiedJobPagePro
 
       {job.image_path && (
        <img
-       src={`http://localhost:8000/storage/${job.image_path}`}
+       src={`https://admin.hrpostingpartner.com/storage/${job.image_path}`}
        alt={job.job_title}
        className="rounded mb-6 max-h-64 object-cover w-full"
      />

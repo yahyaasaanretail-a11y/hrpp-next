@@ -21,7 +21,7 @@ interface JobListSectionProps {
 }
 
 async function getJobs(page = 1): Promise<{ data: Job[]; last_page: number }> {
-  const res = await fetch(`http://localhost:8000/api/jobs?page=${page}`, {
+  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?page=${page}`, {
     next: { revalidate: 60 },
   });
 
