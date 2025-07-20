@@ -17,26 +17,59 @@ interface Job {
 
 interface JobListSectionProps {
   page?: number;
-  totalPages?: number;
+  searchParams?: {
+    start?: string;
+    end?: string;
+    locations?: string;
+    experience?: string;
+  };
 }
 
-async function getJobs(page = 1): Promise<{ data: Job[]; last_page: number }> {
-  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?page=${page}`, {
-    next: { revalidate: 60 },
-  });
+async function getJobs(
+    page = 1,
+    filters: JobListSectionProps['searchParams'] = {}
+  ): Promise<{ data: Job[]; last_page: number }> {
+    const safeFilters: Record<string, string> = {
+      page: page.toString(),
+      ...Object.fromEntries(
+        Object.entries(filters).filter(
+          ([, value]) => typeof value === 'string' && value !== ''
+        )
+      ),
+    };
+  
+    const query = new URLSearchParams(safeFilters).toString();
+  
+    const res = await fetch(`http://localhost:8000/api/jobs?${query}`, {
+      next: { revalidate: 60 },
+    });
+  
+    if (!res.ok) throw new Error('Failed to fetch jobs');
+  
+    const data = await res.json();
+    return { data: data.data, last_page: data.meta?.last_page || 1 };
+  }
+  
 
-  if (!res.ok) throw new Error('Failed to fetch jobs');
-
-  const data = await res.json();
-  return { data: data.data, last_page: data.meta?.last_page || 1 };
-}
-
-export default async function JobListSection({ page = 1 }: JobListSectionProps) {
-  const { data: jobs, last_page } = await getJobs(page);
+export default async function JobListSection({
+  page = 1,
+  searchParams = {},
+}: JobListSectionProps) {
+  const { data: jobs, last_page } = await getJobs(page, searchParams);
 
   if (!jobs || jobs.length === 0) {
     return <p className="text-center text-gray-500">No jobs found.</p>;
   }
+
+  const queryString = new URLSearchParams(
+    Object.entries(searchParams || {}).reduce((acc, [key, value]) => {
+      if (key !== 'page' && typeof value === 'string') {
+        acc[key] = value;
+      }
+      return acc;
+    }, {} as Record<string, string>)
+  ).toString();
+  const pagePath = `/classified-jobs${queryString ? `?${queryString}&page=` : `?page=`}`;
 
   return (
     <div className="space-y-6">
@@ -49,7 +82,7 @@ export default async function JobListSection({ page = 1 }: JobListSectionProps) 
           <div className="flex items-center gap-4 mb-4">
             {job.image_path && (
               <img
-                src={`${job.image_path}`}
+                src={job.image_path}
                 alt={job.title}
                 className="w-16 h-16 rounded object-cover"
               />
@@ -66,7 +99,10 @@ export default async function JobListSection({ page = 1 }: JobListSectionProps) 
 
           <div className="mt-4 flex flex-wrap gap-2">
             {job.locations?.map((loc) => (
-              <span key={loc} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs">
+              <span
+                key={loc}
+                className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
+              >
                 📍 {loc}
               </span>
             ))}
@@ -87,7 +123,7 @@ export default async function JobListSection({ page = 1 }: JobListSectionProps) 
         {Array.from({ length: last_page }, (_, i) => (
           <Link
             key={i + 1}
-            href={i === 0 ? `/classified-jobs` : `/classified-jobs/page/${i + 1}`}
+            href={`${pagePath}${i + 1}`}
             className={`px-4 py-2 rounded border text-sm transition ${
               page === i + 1
                 ? 'bg-blue-600 text-white border-blue-600'

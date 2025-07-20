@@ -12,6 +12,7 @@
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
     "axios": "^1.10.0",
+    "dayjs": "^1.11.13",
     "litepicker": "^2.0.12",
     "lucide-react": "^0.525.0",
     "next": "15.3.5",

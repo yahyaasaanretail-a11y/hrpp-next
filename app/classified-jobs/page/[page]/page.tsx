@@ -27,7 +27,7 @@ export default async function PaginatedJobsPage({ params }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       <section className="mb-6 text-center">
-        <p className="text-sm text-gray-500">9th September, 2001 - 9th September, 2001</p>
+        {/* <p className="text-sm text-gray-500">9th September, 2001 - 9th September, 2001</p> */}
       </section>
       <JobListSection page={currentPage} />
     </div>

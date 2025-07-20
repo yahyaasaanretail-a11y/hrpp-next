@@ -1,19 +1,17 @@
-// app/jobs/page.tsx
-import { Suspense } from 'react';
-import JobListSection from './JobListSection';
+import JobListSection from '@/app/classified-jobs/JobListSection';
 
-export default function JobsPage() {
-  return (
-    <main className="flex-1">
-      <section className="mb-6 text-center">
-        <p className="text-sm text-gray-500">9th September, 2001 - 9th September, 2001</p>
-      </section>
+export default function ClassifiedJobsPage({
+  searchParams,
+}: {
+  searchParams?: {
+    start?: string;
+    end?: string;
+    locations?: string;
+    experience?: string;
+    page?: string;
+  };
+}) {
+  const page = parseInt(searchParams?.page || '1');
 
-      <Suspense fallback={<p className="text-center text-gray-600">Loading jobs...</p>}>
-        <JobListSection page={1} />
-      </Suspense>
-
-    
-    </main>
-  );
+  return <JobListSection page={page} searchParams={searchParams} />;
 }

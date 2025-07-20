@@ -2,9 +2,12 @@
 
 import { useEffect } from 'react';
 import 'litepicker/dist/css/litepicker.css';
+import dayjs from 'dayjs';
 
 export default function DatePickerInit() {
   useEffect(() => {
+    const target = document.getElementById('date-range');
+    if (!target) return; 
     const Litepicker = require('litepicker').default;
 
     const picker = new Litepicker({
@@ -22,6 +25,43 @@ export default function DatePickerInit() {
         picker.on('selected', (start: any, end: any) => {
           (document.getElementById('start-date') as HTMLInputElement).value = start.format('YYYY-MM-DD');
           (document.getElementById('end-date') as HTMLInputElement).value = end.format('YYYY-MM-DD');
+        });
+
+        picker.on('show', () => {
+          const interval = setInterval(() => {
+            const main = document.querySelector('.litepicker .container__main') as HTMLElement;
+            if (!main || document.querySelector('.litepicker-shortcuts')) return;
+
+            const shortcutContainer = document.createElement('div');
+            shortcutContainer.className =
+  'litepicker-shortcuts flex flex-wrap gap-2 p-3 text-sm bg-gray-100 border border-gray-300 rounded';
+
+            const shortcuts = [
+              { label: 'Today', range: [dayjs(), dayjs()] },
+              { label: 'Yesterday', range: [dayjs().subtract(1, 'day'), dayjs().subtract(1, 'day')] },
+              { label: 'Last 7 Days', range: [dayjs().subtract(6, 'day'), dayjs()] },
+              { label: 'This Month', range: [dayjs().startOf('month'), dayjs().endOf('month')] },
+            ];
+
+            shortcuts.forEach(({ label, range }) => {
+              const btn = document.createElement('button');
+              btn.type = 'button';
+              btn.textContent = label;
+              btn.className =
+                'bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition';
+              btn.onclick = () => {
+                const startStr = range[0].format('YYYY-MM-DD');
+                const endStr = range[1].format('YYYY-MM-DD');
+                picker.setDateRange(startStr, endStr);
+                (document.getElementById('start-date') as HTMLInputElement).value = startStr;
+                (document.getElementById('end-date') as HTMLInputElement).value = endStr;
+              };
+              shortcutContainer.appendChild(btn);
+            });
+
+            main.parentElement?.insertBefore(shortcutContainer, main);
+            clearInterval(interval);
+          }, 50); // retry until .container__main is rendered
         });
       },
     });
