@@ -3,9 +3,9 @@ import JobListSection from '@/app/classified-jobs/JobListSection';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     page: string;
-  };
+  }>;
 }
 
 export const revalidate = 60;
@@ -17,7 +17,8 @@ export async function generateStaticParams() {
 }
 
 export default async function PaginatedJobsPage({ params }: PageProps) {
-  const currentPage = parseInt(params.page, 10);
+    const params2  = await params;
+    const currentPage = parseInt(params2.page, 10);
 
   if (isNaN(currentPage) || currentPage < 1) {
     notFound();
