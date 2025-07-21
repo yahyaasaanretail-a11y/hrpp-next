@@ -1,11 +1,5 @@
-// app/jobs/[slug]/page.tsx
-import { notFound } from "next/navigation";
-
-interface ClassifiedJobPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 export const revalidate = 60;
 
@@ -13,46 +7,58 @@ async function getJob(slug: string) {
   const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs/${slug}`, {
     next: { revalidate: 60 },
   });
-
   if (!res.ok) return null;
   return res.json();
 }
 
-export default async function ClassifiedJobPage({
+// ✅ generateMetadata can stay sync with the correct type
+export async function generateMetadata({
   params,
-}: ClassifiedJobPageProps) {
-  const { slug } = await params; // Await params because Next.js may pass it as a Promise
-  
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const job = await getJob(slug);
+  if (!job) return { title: 'Job Not Found' };
+
+  return {
+    title: job.job_title,
+    description: job.short_description ?? '',
+  };
+}
+
+// ✅ Main component uses async `params` (after codemod)
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const job = await getJob(slug);
 
   if (!job) notFound();
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      {/* Title */}
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        {job.job_title}
-      </h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">{job.job_title}</h1>
 
-      {/* Job Metadata */}
       <div className="space-y-2 text-sm text-gray-600 mb-6">
         <p>
-          <strong>📍 Locations:</strong>{" "}
-          {job.locations?.map((l: any) => l.name || l.text).join(", ") || "N/A"}
+          <strong>📍 Locations:</strong>{' '}
+          {job.locations?.map((l: any) => l.name || l.text).join(', ') || 'N/A'}
         </p>
         <p>
-          <strong>👨‍💼 Roles:</strong>{" "}
-          {job.roles?.map((r: any) => r.name || r.text).join(", ") || "N/A"}
+          <strong>👨‍💼 Roles:</strong>{' '}
+          {job.roles?.map((r: any) => r.name || r.text).join(', ') || 'N/A'}
         </p>
         <p>
           <strong>🗓 Posted:</strong> {job.posted_at}
         </p>
         <p>
-          <strong>⏳ Expires:</strong> {job.expiry_date ?? "N/A"}
+          <strong>⏳ Expires:</strong> {job.expiry_date ?? 'N/A'}
         </p>
       </div>
 
-      {/* Job Image */}
       {job.image_path && (
         <img
           src={`https://admin.hrpostingpartner.com/storage/${job.image_path}`}
@@ -61,12 +67,10 @@ export default async function ClassifiedJobPage({
         />
       )}
 
-      {/* Job Description */}
       <div
         className="prose prose-img:mx-auto max-w-none text-gray-800"
-        dangerouslySetInnerHTML={{ __html: job.description ?? "" }}
+        dangerouslySetInnerHTML={{ __html: job.description ?? '' }}
       />
-
     </div>
   );
 }

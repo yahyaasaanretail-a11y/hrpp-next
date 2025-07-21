@@ -1,17 +1,13 @@
 import JobListSection from '@/app/classified-jobs/JobListSection';
 
-export default function ClassifiedJobsPage({
+export default async function ClassifiedJobsPage({
   searchParams,
 }: {
-  searchParams?: {
-    start?: string;
-    end?: string;
-    locations?: string;
-    experience?: string;
-    page?: string;
-  };
+  searchParams?: any;
 }) {
-  const page = parseInt(searchParams?.page || '1');
+  // ⛔ You’ve disabled type safety — now force-cast carefully
+  const rawParams = searchParams as Record<string, string>;
+  const page = parseInt(rawParams?.page || '1', 10);
 
-  return <JobListSection page={page} searchParams={searchParams} />;
+  return <JobListSection page={page} searchParams={rawParams} />;
 }

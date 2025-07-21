@@ -17,38 +17,43 @@ interface Job {
 
 interface JobListSectionProps {
   page?: number;
-  searchParams?: {
-    start?: string;
-    end?: string;
-    locations?: string;
-    experience?: string;
-  };
+  searchParams?: Record<string, string>;
 }
 
 async function getJobs(
-    page = 1,
-    filters: JobListSectionProps['searchParams'] = {}
-  ): Promise<{ data: Job[]; last_page: number }> {
-    const safeFilters: Record<string, string> = {
-      page: page.toString(),
+  page = 1,
+  filters: JobListSectionProps['searchParams'] = {}
+): Promise<{ data: Job[]; last_page: number }> {
+  // ✅ Normalize filters to ensure it's a plain object
+  let safeFilters: Record<string, string> = { page: page.toString() };
+
+  if (filters instanceof URLSearchParams) {
+    for (const [key, value] of filters.entries()) {
+      if (value) safeFilters[key] = value;
+    }
+  } else if (filters && typeof filters === 'object') {
+    safeFilters = {
+      ...safeFilters,
       ...Object.fromEntries(
         Object.entries(filters).filter(
           ([, value]) => typeof value === 'string' && value !== ''
         )
       ),
     };
-  
-    const query = new URLSearchParams(safeFilters).toString();
-  
-    const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?${query}`, {
-      next: { revalidate: 60 },
-    });
-  
-    if (!res.ok) throw new Error('Failed to fetch jobs');
-  
-    const data = await res.json();
-    return { data: data.data, last_page: data.meta?.last_page || 1 };
   }
+
+  const query = new URLSearchParams(safeFilters).toString();
+
+  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?${query}`, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch jobs');
+
+  const data = await res.json();
+  return { data: data.data, last_page: data.meta?.last_page || 1 };
+}
+
   
 
 export default async function JobListSection({
