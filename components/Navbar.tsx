@@ -18,6 +18,10 @@ const Navbar = () => {
     { title: 'Jobs in Faisalabad', link: '/jobs-in-faisalabad' },
     { title: 'Remote Jobs for Pakistan', link: '/remote-jobs-for-pakistan' },
     { title: 'Jobs/Internship for Non-experienced', link: '/jobs-internships-for-non-experienced' },
+    { title: 'Linkedin Page', link: 'https://www.linkedin.com/company/hr-posting-partner/' },
+    { title: 'Open Facebook Group', link: 'https://www.facebook.com/groups/644836695155098' },
+    { title: 'Open Linkedin Group', link: 'https://www.linkedin.com/groups/13176545' },
+
   ];
 
   useEffect(() => {
