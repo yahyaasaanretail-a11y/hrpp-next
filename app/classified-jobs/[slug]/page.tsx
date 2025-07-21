@@ -2,15 +2,15 @@
 import { notFound } from "next/navigation";
 
 interface ClassifiedJobPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export const revalidate = 60;
 
 async function getJob(slug: string) {
-  const res = await fetch(`http://localhost:8000/api/jobs/${slug}`, {
+  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs/${slug}`, {
     next: { revalidate: 60 },
   });
 
@@ -21,7 +21,8 @@ async function getJob(slug: string) {
 export default async function ClassifiedJobPage({
   params,
 }: ClassifiedJobPageProps) {
-  const { slug } = params;
+  const { slug } = await params; // Await params because Next.js may pass it as a Promise
+  
   const job = await getJob(slug);
 
   if (!job) notFound();
@@ -54,7 +55,7 @@ export default async function ClassifiedJobPage({
       {/* Job Image */}
       {job.image_path && (
         <img
-          src={`http://localhost:8000/storage/${job.image_path}`}
+          src={`https://admin.hrpostingpartner.com/storage/${job.image_path}`}
           alt={job.job_title}
           className="w-full max-h-64 object-cover rounded mb-8"
         />
