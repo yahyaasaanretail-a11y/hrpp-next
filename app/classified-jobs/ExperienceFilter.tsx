@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 
 interface Experience {
   id: number;
-  name: string;
+  text: string;
 }
 
 export default function ExperienceFilter() {

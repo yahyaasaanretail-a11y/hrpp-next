@@ -41,29 +41,38 @@ export default function JobsLayout({ children }: { children: React.ReactNode }) 
 
           {showFilters && (
             <div className="flex justify-center mt-6 mb-8 px-2">
-              <form method="GET" className="flex w-full max-w-xl relative">
-                <input
-                  type="text"
-                  name="q"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search job title, keyword, or role..."
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-full shadow-sm text-sm text-gray-700 
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                />
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</div>
-                {search && (
-                  <button
-                    type="button"
-                    onClick={handleClear}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 text-lg focus:outline-none"
-                    aria-label="Clear search"
-                  >
-                    &times;
-                  </button>
-                )}
-                <button type="submit" hidden />
-              </form>
+              <form method="GET" className="flex w-full max-w-xl">
+  <div className="relative w-full">
+    <input
+      type="text"
+      name="q"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="Search job title, keyword, or role..."
+      className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-l-full shadow-sm text-sm text-gray-700 
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+    />
+    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</div>
+    {search && (
+      <button
+        type="button"
+        onClick={handleClear}
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 text-lg focus:outline-none"
+        aria-label="Clear search"
+      >
+        &times;
+      </button>
+    )}
+  </div>
+
+  <button
+    type="submit"
+    className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-r-full transition"
+  >
+    Search
+  </button>
+</form>
+
             </div>
           )}
         </>
