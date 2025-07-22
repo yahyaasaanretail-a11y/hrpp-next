@@ -1,9 +1,10 @@
 'use client';
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import DatePickerInit from './DatePickerInit';
 import LocationSearchMultiSelect from './LocationSearchMultiSelect';
+import ExperienceFilter from './ExperienceFilter';
 
 export default function JobsLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -28,6 +29,7 @@ export default function JobsLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+       <Suspense fallback={<div className="text-center text-gray-400">Loading filters...</div>}>
       {showHeader && (
         <>
           <h1 className="text-2xl sm:text-4xl font-bold text-center text-blue-700 mb-2">
@@ -118,17 +120,8 @@ export default function JobsLayout({ children }: { children: React.ReactNode }) 
                   <LocationSearchMultiSelect />
 
                   {/* Experience Filter */}
-                  <div>
-                    <p className="font-medium mb-2">Experience Required:</p>
-                    <select
-                      name="experience"
-                      className="w-full border px-2 py-1 rounded text-sm"
-                    >
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                      <option value="Less than 1 year">Less than 1 year</option>
-                    </select>
-                  </div>
+                  <ExperienceFilter />
+
 
                   {/* Submit */}
                   <button
@@ -169,6 +162,8 @@ export default function JobsLayout({ children }: { children: React.ReactNode }) 
 
       {/* Litepicker only when filters shown */}
       {showFilters && <DatePickerInit />}
+      </Suspense>
     </div>
+
   );
 }

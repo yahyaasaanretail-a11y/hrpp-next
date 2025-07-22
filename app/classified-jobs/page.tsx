@@ -1,13 +1,19 @@
+import { Suspense } from 'react';
 import JobListSection from '@/app/classified-jobs/JobListSection';
+import JobsLayout from '@/app/classified-jobs/JobsLayout';
 
 export default async function ClassifiedJobsPage({
   searchParams,
 }: {
-  searchParams?: any;
+  searchParams?: Record<string, string>;
 }) {
-  // ⛔ You’ve disabled type safety — now force-cast carefully
-  const rawParams = searchParams as Record<string, string>;
-  const page = parseInt(rawParams?.page || '1', 10);
+  const page = parseInt(searchParams?.page || '1', 10);
 
-  return <JobListSection page={page} searchParams={rawParams} />;
+  return (
+    <Suspense fallback={<div className="text-center text-gray-500 py-10">Loading jobs...</div>}>
+      <JobsLayout>
+        <JobListSection page={page} searchParams={searchParams} />
+      </JobsLayout>
+    </Suspense>
+  );
 }

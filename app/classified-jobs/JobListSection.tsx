@@ -46,7 +46,7 @@ async function getJobs(
   const query = new URLSearchParams(safeFilters).toString();
 
   const res = await fetch(
-    `https://admin.hrpostingpartner.com/api/jobs?${query}`,
+    `http://localhost:8000/api/jobs?${query}`,
     {
       next: { revalidate: 60 },
     }

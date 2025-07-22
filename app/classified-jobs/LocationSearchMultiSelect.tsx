@@ -13,7 +13,7 @@ export default function LocationSearchMultiSelect() {
 
   const fetchLocations = async (q: string) => {
     setLoading(true);
-    const res = await fetch(`https://admin.hrpostingpartner.com/api/locations?q=${encodeURIComponent(q)}`);
+    const res = await fetch(`http://localhost:8000/api/locations?q=${encodeURIComponent(q)}`);
     const data = await res.json();
     setLocations(data.map((l: any) => l.text));
     setLoading(false);
