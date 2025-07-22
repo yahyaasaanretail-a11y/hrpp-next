@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function LocationSearchMultiSelect() {
+  const searchParams = useSearchParams();
   const [search, setSearch] = useState('');
   const [locations, setLocations] = useState<string[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
@@ -16,6 +18,14 @@ export default function LocationSearchMultiSelect() {
     setLocations(data.map((l: any) => l.text));
     setLoading(false);
   };
+
+  useEffect(() => {
+    const query = searchParams.get('locations');
+    if (query) {
+      const values = query.split(',').map((val) => val.trim());
+      setSelected(values);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     // Immediate fetch on mount (initial load)

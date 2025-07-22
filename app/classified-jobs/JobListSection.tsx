@@ -1,5 +1,5 @@
 // app/jobs/JobListSection.tsx
-import Link from 'next/link';
+import Link from "next/link";
 
 export const revalidate = 60;
 
@@ -8,6 +8,7 @@ interface Job {
   title: string;
   slug: string;
   posted_at: string;
+  expiry_date: string;
   description: string;
   short_description?: string;
   image_path?: string;
@@ -22,7 +23,7 @@ interface JobListSectionProps {
 
 async function getJobs(
   page = 1,
-  filters: JobListSectionProps['searchParams'] = {}
+  filters: JobListSectionProps["searchParams"] = {}
 ): Promise<{ data: Job[]; last_page: number }> {
   // ✅ Normalize filters to ensure it's a plain object
   let safeFilters: Record<string, string> = { page: page.toString() };
@@ -31,12 +32,12 @@ async function getJobs(
     for (const [key, value] of filters.entries()) {
       if (value) safeFilters[key] = value;
     }
-  } else if (filters && typeof filters === 'object') {
+  } else if (filters && typeof filters === "object") {
     safeFilters = {
       ...safeFilters,
       ...Object.fromEntries(
         Object.entries(filters).filter(
-          ([, value]) => typeof value === 'string' && value !== ''
+          ([, value]) => typeof value === "string" && value !== ""
         )
       ),
     };
@@ -44,17 +45,18 @@ async function getJobs(
 
   const query = new URLSearchParams(safeFilters).toString();
 
-  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?${query}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `https://admin.hrpostingpartner.com/api/jobs?${query}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
-  if (!res.ok) throw new Error('Failed to fetch jobs');
+  if (!res.ok) throw new Error("Failed to fetch jobs");
 
   const data = await res.json();
   return { data: data.data, last_page: data.meta?.last_page || 1 };
 }
-
-  
 
 export default async function JobListSection({
   page = 1,
@@ -68,13 +70,15 @@ export default async function JobListSection({
 
   const queryString = new URLSearchParams(
     Object.entries(searchParams || {}).reduce((acc, [key, value]) => {
-      if (key !== 'page' && typeof value === 'string') {
+      if (key !== "page" && typeof value === "string") {
         acc[key] = value;
       }
       return acc;
     }, {} as Record<string, string>)
   ).toString();
-  const pagePath = `/classified-jobs${queryString ? `?${queryString}&page=` : `?page=`}`;
+  const pagePath = `/classified-jobs${
+    queryString ? `?${queryString}&page=` : `?page=`
+  }`;
 
   return (
     <div className="space-y-6">
@@ -93,8 +97,13 @@ export default async function JobListSection({
               />
             )}
             <div>
-              <h2 className="text-xl font-semibold text-blue-700">{job.title}</h2>
-              <p className="text-sm text-gray-400">Posted on: {job.posted_at}</p>
+              <h2 className="text-xl font-semibold text-blue-700">
+                {job.title}
+              </h2>
+              <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+                <p>Posted on: {job.posted_at}</p>
+                <p>Expires on: {job.expiry_date ?? "N/A"}</p>
+              </div>
             </div>
           </div>
 
@@ -131,8 +140,8 @@ export default async function JobListSection({
             href={`${pagePath}${i + 1}`}
             className={`px-4 py-2 rounded border text-sm transition ${
               page === i + 1
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
             }`}
           >
             {i + 1}

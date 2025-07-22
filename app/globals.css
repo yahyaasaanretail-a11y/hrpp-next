@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.prose img {
+    @apply aspect-[4/3] object-contain w-full h-auto rounded;
+  }
+  

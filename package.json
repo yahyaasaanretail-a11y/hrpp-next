@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.10.0",
     "dayjs": "^1.11.13",
     "litepicker": "^2.0.12",

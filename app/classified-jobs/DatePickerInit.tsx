@@ -1,11 +1,27 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import 'litepicker/dist/css/litepicker.css';
 import dayjs from 'dayjs';
 
 export default function DatePickerInit() {
+  const searchParams = useSearchParams();
   useEffect(() => {
+    const startParam = searchParams.get('start');
+    const endParam = searchParams.get('end');
+
+    const dateInput = document.getElementById('date-range') as HTMLInputElement;
+    const startInput = document.getElementById('start-date') as HTMLInputElement;
+    const endInput = document.getElementById('end-date') as HTMLInputElement;
+
+    // Set initial values if present
+    if (startParam && endParam) {
+      dateInput.value = `${startParam} - ${endParam}`;
+      startInput.value = startParam;
+      endInput.value = endParam;
+    }
+
     const target = document.getElementById('date-range');
     if (!target) return; 
     const Litepicker = require('litepicker').default;
@@ -21,6 +37,7 @@ export default function DatePickerInit() {
         months: true,
         years: true,
       },
+      maxDate: new Date(), // 🔒 disables future dates
       setup: (picker: any) => {
         picker.on('selected', (start: any, end: any) => {
           (document.getElementById('start-date') as HTMLInputElement).value = start.format('YYYY-MM-DD');
