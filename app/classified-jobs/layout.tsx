@@ -1,49 +1,44 @@
-"use client";
+'use client';
 
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import DatePickerInit from './DatePickerInit';
+import LocationSearchMultiSelect from './LocationSearchMultiSelect';
 
-import DatePickerInit from "./DatePickerInit";
-import LocationSearchMultiSelect from "./LocationSearchMultiSelect";
-
-export default function JobsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function JobsLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const isSlugPage = /^\/classified-jobs\/[^\/]+$/.test(pathname);
-  const isListingPage = pathname === "/classified-jobs";
+  const isListingPage = pathname === '/classified-jobs';
   const showHeader = !isSlugPage;
   const showFilters = isListingPage;
 
-  const initialQuery = searchParams.get("q") ?? "";
+  const initialQuery = searchParams.get('q') ?? '';
   const [search, setSearch] = useState(initialQuery);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const handleClear = () => {
-    setSearch("");
-    // Remove 'q' from URL
+    setSearch('');
     const params = new URLSearchParams(searchParams.toString());
-    params.delete("q");
+    params.delete('q');
     router.push(`${pathname}?${params.toString()}`);
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
       {showHeader && (
         <>
-          <h1 className="text-4xl font-bold text-center text-blue-700 mb-2">
+          <h1 className="text-2xl sm:text-4xl font-bold text-center text-blue-700 mb-2">
             Classified Jobs
           </h1>
-          <p className="text-center text-gray-600 italic">
+          <p className="text-center text-gray-600 italic text-sm sm:text-base">
             “Find the jobs you desire”
           </p>
 
           {showFilters && (
-            <div className="flex justify-center mt-6 mb-8">
+            <div className="flex justify-center mt-6 mb-8 px-2">
               <form method="GET" className="flex w-full max-w-xl relative">
                 <input
                   type="text"
@@ -54,13 +49,7 @@ export default function JobsLayout({
                   className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-full shadow-sm text-sm text-gray-700 
                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
-
-                {/* 🔍 Icon */}
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
-                  🔍
-                </div>
-
-                {/* ❌ Clear Icon */}
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</div>
                 {search && (
                   <button
                     type="button"
@@ -71,8 +60,6 @@ export default function JobsLayout({
                     &times;
                   </button>
                 )}
-
-                {/* Hidden submit to allow enter key to still work */}
                 <button type="submit" hidden />
               </form>
             </div>
@@ -80,65 +67,86 @@ export default function JobsLayout({
         </>
       )}
 
-      <div className="flex gap-8">
-        <aside className="w-64 border-r pr-6 text-sm space-y-6">
+      <div className="flex flex-col lg:flex-row gap-8">
+        <aside className="w-full lg:w-64 lg:border-r lg:pr-6 text-sm space-y-6">
           {showFilters && (
-            <form method="GET" className="space-y-6">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="font-semibold">Filters:</h2>
-                <a
-                  href="/classified-jobs"
-                  className="text-xs text-red-600 underline hover:text-red-800 transition"
+            <>
+              {/* Mobile Filter Toggle Button */}
+              <div className="lg:hidden mb-4 flex justify-between items-center">
+                <h2 className="font-semibold text-base">Filters</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowMobileFilters(!showMobileFilters)}
+                  className="text-sm text-blue-600 hover:text-blue-800 transition"
                 >
-                  Clear All
-                </a>
+                  {showMobileFilters ? 'Hide ▲' : 'Show ▼'}
+                </button>
               </div>
 
-              {/* Date Filter */}
-              <div>
-                <p className="font-medium mb-2">Date Posted:</p>
-                <input
-                  type="text"
-                  id="date-range"
-                  className="w-full border rounded px-2 py-1 text-sm"
-                  placeholder="Select range"
-                  readOnly
-                />
-                <input type="hidden" name="start" id="start-date" />
-                <input type="hidden" name="end" id="end-date" />
-              </div>
-
-              {/* Location Filter */}
-              <LocationSearchMultiSelect />
-
-              {/* Experience Filter */}
-              <div>
-                <p className="font-medium mb-2">Experience Required:</p>
-                <select
-                  name="experience"
-                  className="w-full border px-2 py-1 rounded text-sm"
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="Less than 1 year">Less than 1 year</option>
-                </select>
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white text-xs rounded px-3 py-2 mt-2"
+              {/* Animated Collapsible Filter Form */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out 
+                  ${showMobileFilters ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} 
+                  lg:max-h-none lg:opacity-100 lg:block`}
               >
-                Apply Filter
-              </button>
-            </form>
+                <form method="GET" className="space-y-6 pt-2 lg:pt-0">
+                  <div className="flex items-center justify-between mb-2">
+                    <h2 className="font-semibold lg:hidden">Filter Options:</h2>
+                    <a
+                      href="/classified-jobs"
+                      className="text-xs text-red-600 underline hover:text-red-800 transition"
+                    >
+                      Clear All
+                    </a>
+                  </div>
+
+                  {/* Date Filter */}
+                  <div>
+                    <p className="font-medium mb-2">Date Posted:</p>
+                    <input
+                      type="text"
+                      id="date-range"
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      placeholder="Select range"
+                      readOnly
+                    />
+                    <input type="hidden" name="start" id="start-date" />
+                    <input type="hidden" name="end" id="end-date" />
+                  </div>
+
+                  {/* Location Filter */}
+                  <LocationSearchMultiSelect />
+
+                  {/* Experience Filter */}
+                  <div>
+                    <p className="font-medium mb-2">Experience Required:</p>
+                    <select
+                      name="experience"
+                      className="w-full border px-2 py-1 rounded text-sm"
+                    >
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                      <option value="Less than 1 year">Less than 1 year</option>
+                    </select>
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white text-xs rounded px-3 py-2 mt-2"
+                  >
+                    Apply Filter
+                  </button>
+                </form>
+              </div>
+            </>
           )}
 
-          {/* ✅ Ad Box Always Visible */}
+          {/* Ad Box Always Visible */}
           <div className="border p-3 text-xs text-gray-700 rounded">
             <p>Want your job ad here?</p>
             <p className="mt-2">
-              Contact:{" "}
+              Contact:{' '}
               <a
                 href="https://wa.me/923223379647"
                 target="_blank"
@@ -159,6 +167,7 @@ export default function JobsLayout({
         <main className="flex-1">{children}</main>
       </div>
 
+      {/* Litepicker only when filters shown */}
       {showFilters && <DatePickerInit />}
     </div>
   );

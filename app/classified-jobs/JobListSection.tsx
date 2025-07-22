@@ -82,72 +82,74 @@ export default async function JobListSection({
 
   return (
     <div className="space-y-6">
-      {jobs.map((job) => (
-        <Link
-          key={job.id}
-          href={`/classified-jobs/${job.slug}`}
-          className="block border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition bg-white hover:bg-gray-50"
-        >
-          <div className="flex items-center gap-4 mb-4">
-            {job.image_path && (
-              <img
-                src={job.image_path}
-                alt={job.title}
-                className="w-16 h-16 rounded object-cover"
-              />
-            )}
-            <div>
-              <h2 className="text-xl font-semibold text-blue-700">
-                {job.title}
-              </h2>
-              <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                <p>Posted on: {job.posted_at}</p>
-                <p>Expires on: {job.expiry_date ?? "N/A"}</p>
-              </div>
-            </div>
-          </div>
+  {jobs.map((job) => (
+    <Link
+      key={job.id}
+      href={`/classified-jobs/${job.slug}`}
+      className="block border border-gray-200 rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition bg-white hover:bg-gray-50"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+        {job.image_path && (
+          <img
+            src={job.image_path}
+            alt={job.title}
+            className="w-20 h-20 sm:w-16 sm:h-16 rounded object-cover mx-auto sm:mx-0"
+          />
+        )}
 
-          <div className="text-sm text-gray-700 line-clamp-3">
-            {job.short_description}
+        <div className="text-center sm:text-left flex-1">
+          <h2 className="text-lg sm:text-xl font-semibold text-blue-700 mb-1">
+            {job.title}
+          </h2>
+          <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-1 text-xs text-gray-500">
+            <p>Posted: {job.posted_at}</p>
+            <p>Expires: {job.expiry_date ?? "N/A"}</p>
           </div>
+        </div>
+      </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            {job.locations?.map((loc) => (
-              <span
-                key={loc}
-                className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs"
-              >
-                📍 {loc}
-              </span>
-            ))}
-            {job.roles?.map((role, idx) => (
-              <span
-                key={idx}
-                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs"
-              >
-                #{role}
-              </span>
-            ))}
-          </div>
-        </Link>
-      ))}
+      <div className="text-sm text-gray-700 line-clamp-3 mb-3">
+        {job.short_description}
+      </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center gap-2 mt-10">
-        {Array.from({ length: last_page }, (_, i) => (
-          <Link
-            key={i + 1}
-            href={`${pagePath}${i + 1}`}
-            className={`px-4 py-2 rounded border text-sm transition ${
-              page === i + 1
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
-            }`}
+      <div className="flex flex-wrap gap-2 text-xs">
+        {job.locations?.map((loc) => (
+          <span
+            key={loc}
+            className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
           >
-            {i + 1}
-          </Link>
+            📍 {loc}
+          </span>
+        ))}
+        {job.roles?.map((role, idx) => (
+          <span
+            key={idx}
+            className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full"
+          >
+            #{role}
+          </span>
         ))}
       </div>
-    </div>
+    </Link>
+  ))}
+
+  {/* Pagination */}
+  <div className="flex flex-wrap justify-center gap-2 mt-10">
+    {Array.from({ length: last_page }, (_, i) => (
+      <Link
+        key={i + 1}
+        href={`${pagePath}${i + 1}`}
+        className={`px-4 py-2 rounded border text-sm transition ${
+          page === i + 1
+            ? "bg-blue-600 text-white border-blue-600"
+            : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
+        }`}
+      >
+        {i + 1}
+      </Link>
+    ))}
+  </div>
+</div>
+
   );
 }
