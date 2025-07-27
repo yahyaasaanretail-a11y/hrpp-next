@@ -134,7 +134,7 @@ const RecruiterSection = () => {
       <div className="max-w-7xl mx-auto py-4">
         <div className="flex flex-col-reverse lg:flex-row items-center bg-white shadow-2xl rounded-2xl p-6 sm:p-10 gap-8">
           <div className="lg:w-2/3 text-center lg:text-left space-y-4">
-            <h3 className="text-3xl font-semibold text-blue-500">Advertise with Us!</h3>
+            <h3 className="text-3xl font-bold text-blue-500">Advertise with Us!</h3>
             <p className="text-lg text-gray-700">
               Promote your business to thousands via our high-engagement social platforms. Advertise easily
               through WhatsApp Channels and Facebook. (No LinkedIn sponsored ads.)

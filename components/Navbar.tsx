@@ -68,7 +68,7 @@ const Navbar = () => {
               onMouseEnter={() => setIsDropdownOpen(true)}
               onFocus={() => setIsDropdownOpen(true)}
             >
-              Job Opportunities
+              Other Platforms
             </button>
 
             {isDropdownOpen && (
@@ -117,12 +117,16 @@ const Navbar = () => {
             About Us
           </Link>
 
+          <Link href="/classified-jobs" className="block text-gray-700 hover:text-blue-600 font-semibold">
+            Classified Jobs
+          </Link>
+
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen((prev) => !prev)}
               className="block text-gray-700 hover:text-blue-600 font-semibold"
             >
-              Job Opportunities
+              Other Platforms
             </button>
 
             {isDropdownOpen && (

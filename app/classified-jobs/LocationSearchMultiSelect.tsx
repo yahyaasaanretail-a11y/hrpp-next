@@ -1,36 +1,42 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function LocationSearchMultiSelect() {
   const searchParams = useSearchParams();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [locations, setLocations] = useState<string[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   const fetchLocations = async (q: string) => {
     setLoading(true);
-    const res = await fetch(`https://admin.hrpostingpartner.com/api/locations?q=${encodeURIComponent(q)}`);
+    const res = await fetch(
+      `https://admin.hrpostingpartner.com/api/locations?q=${encodeURIComponent(
+        q
+      )}`
+    );
     const data = await res.json();
     setLocations(data.map((l: any) => l.text));
     setLoading(false);
   };
 
   useEffect(() => {
-    const query = searchParams.get('locations');
+    const query = searchParams.get("locations");
     if (query) {
-      const values = query.split(',').map((val) => val.trim());
+      const values = query.split(",").map((val) => val.trim());
       setSelected(values);
     }
   }, [searchParams]);
 
   useEffect(() => {
     // Immediate fetch on mount (initial load)
-    fetchLocations('');
-  
+    fetchLocations("");
+
     // Debounced fetch on search input change
     if (debounceTimer) clearTimeout(debounceTimer);
     const timer = setTimeout(() => {
@@ -38,17 +44,20 @@ export default function LocationSearchMultiSelect() {
     }, 300);
     setDebounceTimer(timer);
   }, [search]);
-  
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
     setSelected(selectedOptions);
   };
 
   return (
     <div className="space-y-2">
       {/* Hidden input to submit selected locations as CSV */}
-      <input type="hidden" name="locations" value={selected.join(',')} />
+      <h2 className="font-semibold">Locations:</h2>
+      <input type="hidden" name="locations" value={selected.join(",")} />
 
       {/* Search input */}
       <input
@@ -77,7 +86,9 @@ export default function LocationSearchMultiSelect() {
       </select>
 
       <p className="text-xs text-gray-500 italic">
-        Hold <kbd className="px-1 bg-gray-200 border rounded">Ctrl</kbd> / <kbd className="px-1 bg-gray-200 border rounded">Cmd</kbd> to select multiple
+        Hold <kbd className="px-1 bg-gray-200 border rounded">Ctrl</kbd> /{" "}
+        <kbd className="px-1 bg-gray-200 border rounded">Cmd</kbd> to select
+        multiple
       </p>
     </div>
   );

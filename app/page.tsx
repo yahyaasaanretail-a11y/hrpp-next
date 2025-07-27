@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col space-y-16">
+    <main className="flex flex-col">
       <Banner />
       <SponsoredAd />
       <section className="px-4 md:px-12">

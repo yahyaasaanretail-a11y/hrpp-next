@@ -119,7 +119,7 @@ const HomePageSlider = () => {
     <div className="relative w-full max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
       {/* Header */}
       <div className="flex justify-between items-center p-6 border-b border-white/10">
-        <h2 className="text-3xl font-semibold text-blue-500">What our Community Say</h2>
+        <h2 className="text-3xl font-bold text-blue-500">What our Community Say</h2>
       </div>
   
       {/* Slider */}
