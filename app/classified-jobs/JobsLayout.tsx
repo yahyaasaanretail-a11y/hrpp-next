@@ -115,9 +115,7 @@ export default function JobsLayout({
                 >
                   <form method="GET" className="space-y-6 pt-2 lg:pt-0">
                     <div className="flex items-center justify-between mb-2">
-                      <h2 className="font-semibold">
-                        Filter Options:
-                      </h2>
+                      <h2 className="font-semibold">Filter Options:</h2>
                       <a
                         href="/classified-jobs"
                         className="text-xs text-red-600 underline hover:text-red-800 transition"
@@ -173,9 +171,61 @@ export default function JobsLayout({
                 </a>
               </p>
               <p>
-                Follow our <a href="/terms-and-conditions" className=" text-blue-600 underline">terms and conditions</a>.
+                Follow our{" "}
+                <a
+                  href="/terms-and-conditions"
+                  className=" text-blue-600 underline"
+                >
+                  terms and conditions
+                </a>
+                .
               </p>
               <p className="mt-2">Note: Do not send us your resume.</p>
+            </div>
+
+            <div className="mt-6 p-4  border  rounded-lg shadow-sm text-gray-700 break-words">
+              <p className="font-semibold mb-2">
+                Follow other platforms for jobs:
+              </p>
+
+              <p>
+                <span className="font-medium">Main WhatsApp Channel:</span>
+                <br />
+                <a
+                  href="https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline hover:text-blue-800 break-all"
+                >
+                  https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K
+                </a>
+              </p>
+
+              <p className="mt-2">
+                <span className="font-medium">Facebook Page:</span>
+                <br />
+                <a
+                  href="https://www.facebook.com/profile.php?id=100087877179793"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline hover:text-blue-800 break-all"
+                >
+                  https://www.facebook.com/profile.php?id=100087877179793
+                </a>
+              </p>
+
+              <p className="mt-2">
+                <span className="font-medium">LinkedIn Page:</span>
+                <br />
+                <a
+                  href="https://www.linkedin.com/company/hr-posting-partner/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline hover:text-blue-800 break-all"
+                >
+                  https://www.linkedin.com/company/hr-posting-partner/
+                </a>
+              </p>
             </div>
           </aside>
 

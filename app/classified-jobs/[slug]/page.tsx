@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import ShareButton from '@/components/ShareButton';
+import ShareButton from "@/components/ShareButton";
 
 export const revalidate = 60;
 
@@ -45,9 +45,9 @@ export default async function Page({
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-2">
-  <h1 className="text-3xl font-bold text-gray-800">{job.job_title}</h1>
-  <ShareButton title={job.job_title} />
-</div>
+        <h1 className="text-3xl font-bold text-gray-800">{job.job_title}</h1>
+        <ShareButton title={job.job_title} />
+      </div>
 
       <div className="space-y-2 text-sm text-gray-600 mb-6">
         <p>
@@ -111,8 +111,9 @@ export default async function Page({
         <p className="mt-2">Note: Do not send us your resume.</p>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
+      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700 break-words">
         <p className="font-semibold mb-2">Follow other platforms for jobs:</p>
+
         <p>
           <span className="font-medium">Main WhatsApp Channel:</span>
           <br />
@@ -120,11 +121,12 @@ export default async function Page({
             href="https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 underline hover:text-blue-800"
+            className="text-blue-600 underline hover:text-blue-800 break-all"
           >
             https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K
           </a>
         </p>
+
         <p className="mt-2">
           <span className="font-medium">Facebook Page:</span>
           <br />
@@ -132,11 +134,12 @@ export default async function Page({
             href="https://www.facebook.com/profile.php?id=100087877179793"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 underline hover:text-blue-800"
+            className="text-blue-600 underline hover:text-blue-800 break-all"
           >
             https://www.facebook.com/profile.php?id=100087877179793
           </a>
         </p>
+
         <p className="mt-2">
           <span className="font-medium">LinkedIn Page:</span>
           <br />
@@ -144,7 +147,7 @@ export default async function Page({
             href="https://www.linkedin.com/company/hr-posting-partner/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 underline hover:text-blue-800"
+            className="text-blue-600 underline hover:text-blue-800 break-all"
           >
             https://www.linkedin.com/company/hr-posting-partner/
           </a>

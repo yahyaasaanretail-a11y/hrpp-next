@@ -1,5 +1,6 @@
 // app/jobs/JobListSection.tsx
 import Link from "next/link";
+import ShareButton from "@/components/ShareButton";
 
 export const revalidate = 60;
 
@@ -99,9 +100,13 @@ export default async function JobListSection({
             )}
 
             <div className="text-center sm:text-left flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-blue-700 mb-1">
-                {job.title}
-              </h2>
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <h2 className="text-lg sm:text-xl font-semibold text-blue-700">
+                  {job.title}
+                </h2>
+                <ShareButton title={job.slug} />
+              </div>
+
               <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-1 text-xs text-gray-500">
                 <p>Posted: {job.posted_at}</p>
                 <p>Expires: {job.expiry_date ?? "N/A"}</p>
@@ -114,34 +119,33 @@ export default async function JobListSection({
           </div>
 
           <div className="flex flex-wrap gap-2 text-sm">
-  {job.locations?.map((loc) => (
-    <span
-      key={loc}
-      className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full mr-2 mb-2"
-    >
-      📍 {loc}
-    </span>
-  ))}
+            {job.locations?.map((loc) => (
+              <span
+                key={loc}
+                className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full mr-2 mb-2"
+              >
+                📍 {loc}
+              </span>
+            ))}
 
-  {job.roles?.map((role, idx) => (
-    <span
-      key={idx}
-      className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full mr-2 mb-2"
-    >
-      #{role}
-    </span>
-  ))}
+            {job.roles?.map((role, idx) => (
+              <span
+                key={idx}
+                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full mr-2 mb-2"
+              >
+                #{role}
+              </span>
+            ))}
 
-  {job.experiences?.map((experience: string, idx: number) => (
-    <span
-      key={idx}
-      className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full mr-2 mb-2"
-    >
-      🧳 {experience}
-    </span>
-  ))}
-</div>
-
+            {job.experiences?.map((experience: string, idx: number) => (
+              <span
+                key={idx}
+                className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full mr-2 mb-2"
+              >
+                🧳 {experience}
+              </span>
+            ))}
+          </div>
         </Link>
       ))}
 
