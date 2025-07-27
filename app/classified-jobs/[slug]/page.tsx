@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ShareButton from "@/components/ShareButton";
+import JobImageSlider from '@/components/JobImageSlider'; 
 
 export const revalidate = 60;
 
@@ -71,14 +72,8 @@ export default async function Page({
         </p>
       </div>
 
-      {job.image_path && (
-        <div className="w-full max-w-xl h-64 mx-auto mb-8 overflow-hidden">
-          <img
-            src={`https://admin.hrpostingpartner.com/storage/${job.image_path}`}
-            alt={job.job_title}
-            className="w-full h-full object-contain rounded"
-          />
-        </div>
+      {job.images && (
+        <JobImageSlider images={job.images} title={job.job_title} />
       )}
 
       <div

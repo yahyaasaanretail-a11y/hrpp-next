@@ -4,6 +4,9 @@ import ShareButton from "@/components/ShareButton";
 
 export const revalidate = 60;
 
+interface JobImage {
+  image_path: string;
+}
 interface Job {
   id: number;
   title: string;
@@ -13,6 +16,7 @@ interface Job {
   description: string;
   short_description?: string;
   image_path?: string;
+  images: string[];
   locations: string[];
   roles: string[];
   experiences: string[];
@@ -47,12 +51,9 @@ async function getJobs(
 
   const query = new URLSearchParams(safeFilters).toString();
 
-  const res = await fetch(
-    `https://admin.hrpostingpartner.com/api/jobs?${query}`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
+  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?${query}`, {
+    next: { revalidate: 60 },
+  });
 
   if (!res.ok) throw new Error("Failed to fetch jobs");
 
@@ -91,9 +92,9 @@ export default async function JobListSection({
           className="block border border-gray-200 rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition bg-white hover:bg-gray-50"
         >
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-            {job.image_path && (
+            {job.images && job.images.length > 0 && (
               <img
-                src={job.image_path}
+                src={`${job.images[0]}`}
                 alt={job.title}
                 className="w-20 h-20 sm:w-16 sm:h-16 rounded object-cover mx-auto sm:mx-0"
               />
