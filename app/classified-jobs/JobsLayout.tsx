@@ -177,7 +177,7 @@ export default function JobsLayout({
               </p>
               <p className="mt-2">Note: Do not send us your resume.</p>
             </div>
-          </faside>
+          </aside>
 
           {/* Main Content */}
           <main className="flex-1">{children}</main>
