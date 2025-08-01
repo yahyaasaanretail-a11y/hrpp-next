@@ -6,4 +6,10 @@
 .prose img {
     @apply aspect-[4/3] object-contain w-full h-auto rounded;
   }
-  
+
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

@@ -1,5 +1,5 @@
 // app/components/TermsAndConditions.tsx
-import React from 'react';
+import React from "react";
 
 const TermsAndConditions = () => (
   <section className="max-w-3xl mx-auto bg-white shadow-2xl rounded-lg p-4 sm:p-8 my-8">
@@ -12,19 +12,33 @@ const TermsAndConditions = () => (
 
     {/* Main Content */}
     <div className="text-sm sm:text-base text-gray-800 space-y-6">
-      
       {/* Job Ads on Main Platforms */}
       <div>
         <h2 className="font-semibold text-lg sm:text-xl mb-2">
           For Job Ads on our Main Platforms:
         </h2>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Job Ads containing only WhatsApp numbers for reaching out candidates are not allowed.</li>
-          <li>We don’t post job ads without a company’s official email address or link to the job.</li>
+          <li>
+            Job Ads containing only WhatsApp numbers for reaching out candidates
+            are not allowed.
+          </li>
+          <li>
+            We don’t post job ads without a company’s official email address or
+            link to the job.
+          </li>
           <li>Google Form links are not allowed.</li>
-          <li>@gmail.com, @ymail.com, etc. are not official email addresses and are not allowed.</li>
-          <li>Walk-in interview job ads may contain WhatsApp numbers, but not unofficial email addresses.</li>
-          <li>Walk-in interview job ads must include a proper location, date, and time, otherwise they won’t be posted.</li>
+          <li>
+            @gmail.com, @ymail.com, etc. are not official email addresses and
+            are not allowed.
+          </li>
+          <li>
+            Walk-in interview job ads may contain WhatsApp numbers, but not
+            unofficial email addresses.
+          </li>
+          <li>
+            Walk-in interview job ads must include a proper location, date, and
+            time, otherwise they won’t be posted.
+          </li>
         </ul>
       </div>
 
@@ -35,9 +49,17 @@ const TermsAndConditions = () => (
         </h2>
         <ul className="list-disc pl-5 space-y-1">
           <li>Ensure your business is legal and authentic.</li>
-          <li>Scamming the audience will result in immediate deletion and possible reporting.</li>
-          <li>Any illegal business discovered later will be treated similarly.</li>
-          <li>Team HRPP does initial scrutiny, but users are advised to remain cautious.</li>
+          <li>
+            Scamming the audience will result in immediate deletion and possible
+            reporting.
+          </li>
+          <li>
+            Any illegal business discovered later will be treated similarly.
+          </li>
+          <li>
+            Team HRPP does initial scrutiny, but users are advised to remain
+            cautious.
+          </li>
         </ul>
       </div>
 
@@ -47,14 +69,38 @@ const TermsAndConditions = () => (
           For Open Platforms:
         </h2>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Only job ads are allowed — no unrelated content.</li>
-          <li>Bullying or foul language will lead to a ban.</li>
-          <li>For sponsored ads, contact us via our official WhatsApp number.</li>
-          <li>Group activity will be monitored by Team HRPP.</li>
-          <li>We are not responsible for scams on open platforms — proceed with caution.</li>
+          <li>
+            All job ads must clearly mention the job location — whether it is
+            remote, on-site, or simply listed as "Pakistan."
+          </li>
+          <li>
+            Job advertisements must include written content. Image-only job
+            posts will not be accepted.
+          </li>
+          <li>
+            Ads that provide only a WhatsApp number for candidate communication
+            are not allowed.
+          </li>
+          <li>
+            Every job post must include either an official company email address
+            (not personal emails like @gmail.com, @ymail.com, etc.) or a valid
+            link to the job application or company website.
+          </li>
+          <li>Google Form links are not permitted in job listings.</li>
+          <li>
+            Personal email domains such as @gmail.com, @hotmail.com, or
+            @ymail.com are not considered official and are not allowed.
+          </li>
+          <li>
+            Walk-in interview job ads may include a WhatsApp number but must not
+            use personal email addresses.
+          </li>
+          <li>
+            Walk-in interview postings must clearly state the interview
+            location, date, and time. Incomplete ads will not be approved.
+          </li>
         </ul>
       </div>
-
     </div>
   </section>
 );
