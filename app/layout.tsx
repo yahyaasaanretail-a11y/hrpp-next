@@ -1,7 +1,7 @@
 import './globals.css';
-import Header from '../components/Navbar'; // ⬅️ adjust path if needed
-import Footer from '../components/Footer'; // ⬅️ adjust path if needed
-
+import Header from '../components/Navbar';
+import Footer from '../components/Footer';
+import Script from 'next/script'; // ✅ import Script from next
 
 export const metadata = {
   title: 'HRRP Website',
@@ -11,6 +11,27 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ Google Analytics Script */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-B3HPPZMWT4"
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-B3HPPZMWT4', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-white text-gray-900">
         <Header />
         <main>{children}</main>
