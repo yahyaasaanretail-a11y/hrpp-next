@@ -180,7 +180,7 @@ export default function JobsLayout({
                 </a>
                 .
               </p>
-              <p className="mt-2">Note: Do not send us your resume.</p>
+              <p className="mt-2">Note: Do not send your resume or contact us by phone.</p>
             </div>
 
             <div className="mt-6 p-4  border  rounded-lg shadow-sm text-gray-700 break-words">
