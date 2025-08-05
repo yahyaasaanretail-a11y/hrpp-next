@@ -84,6 +84,12 @@ export default async function Page({
       />
 
       <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
+        <p className="mt-2">
+          <strong>How to apply:</strong> Please click on the email address or link mentioned above.
+        </p>
+      </div>
+
+      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
         <p>Want your job ad here?</p>
         <p>
           Contact:{" "}
@@ -106,11 +112,7 @@ export default async function Page({
         <p className="mt-2">Note: Do not send your resume or contact us by phone.</p>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
-        <p className="mt-2">
-          <strong>How to apply:</strong> Please click on the email address or link mentioned above.
-        </p>
-      </div>
+      
 
 
       <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700 break-words">
