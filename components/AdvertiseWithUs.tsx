@@ -22,7 +22,7 @@ const slotPackages = [
     ]
   },
   {
-    time: "9:00 PM",
+    time: "10:00 PM",
     packages: [
       { posts: 1, price: "PKR 750 " },
       { posts: 3, price: "PKR 2,175", sub: "PKR 725 each" },
