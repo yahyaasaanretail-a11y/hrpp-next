@@ -85,7 +85,7 @@ export default async function Page({
 
       <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
         <p className="mt-2">
-          <strong>How to apply:</strong> Please click on the email address or link mentioned above.
+          <strong>How to apply:</strong> Kindly click or right-click to copy and paste the email or link provided above.
         </p>
       </div>
 
