@@ -62,7 +62,7 @@ export default function LocationSearchMultiSelect() {
       {/* Search input */}
       <input
         type="text"
-        placeholder="Type to search locations"
+        placeholder="Search locations: Remote, Karachi etc"
         className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-300"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
