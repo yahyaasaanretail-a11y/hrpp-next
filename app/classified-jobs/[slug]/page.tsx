@@ -83,39 +83,7 @@ export default async function Page({
         dangerouslySetInnerHTML={{ __html: job.description ?? "" }}
       />
 
-      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
-        <p className="mt-2">
-          <strong>How to apply:</strong> Kindly click or right-click to copy and paste the email or link provided above.
-        </p>
-      </div>
-
-      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
-        <p>Want your job ad here?</p>
-        <p>
-          Contact:{" "}
-          <a
-            href="https://wa.me/923223379647"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline hover:text-blue-800"
-          >
-            +92 322 337 9647
-          </a>
-        </p>
-        <p>
-          Follow our{" "}
-          <a href="/terms-and-conditions" className="text-blue-600 underline">
-            terms and conditions
-          </a>
-          .
-        </p>
-        <p className="mt-2">Note: Do not send your resume or contact us by phone.</p>
-      </div>
-
-      
-
-
-      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700 break-words">
+<div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700 break-words">
         <p className="font-semibold mb-2">Follow other platforms for jobs:</p>
 
         <p>
@@ -157,6 +125,39 @@ export default async function Page({
           </a>
         </p>
       </div>
+      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
+        <p className="mt-2">
+          <strong>How to apply:</strong> Kindly click or right-click to copy and paste the email or link provided above.
+        </p>
+      </div>
+
+      <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
+        <p>Want your job ad here?</p>
+        <p>
+          Contact:{" "}
+          <a
+            href="https://wa.me/923223379647"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            +92 322 337 9647
+          </a>
+        </p>
+        <p>
+          Follow our{" "}
+          <a href="/terms-and-conditions" className="text-blue-600 underline">
+            terms and conditions
+          </a>
+          .
+        </p>
+        <p className="mt-2">Note: Do not send your resume or contact us by phone.</p>
+      </div>
+
+      
+
+
+      
     </div>
   );
 }
