@@ -51,9 +51,12 @@ async function getJobs(
 
   const query = new URLSearchParams(safeFilters).toString();
 
-  const res = await fetch(`https://admin.hrpostingpartner.com/api/jobs?${query}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `https://admin.hrpostingpartner.com/api/jobs?${query}`,
+    {
+      next: { revalidate: 60 },
+    }
+  );
 
   if (!res.ok) throw new Error("Failed to fetch jobs");
 
@@ -82,6 +85,60 @@ export default async function JobListSection({
   const pagePath = `/classified-jobs${
     queryString ? `?${queryString}&page=` : `?page=`
   }`;
+
+  // helpers
+  const DOTS = "…";
+
+  function getPaginationRange({
+    currentPage,
+    totalPages,
+    siblingCount = 1, // how many numbers to show on each side
+    boundaryCount = 1, // how many numbers to keep at the start/end
+  }: {
+    currentPage: number;
+    totalPages: number;
+    siblingCount?: number;
+    boundaryCount?: number;
+  }) {
+    const range = (start: number, end: number) =>
+      Array.from({ length: end - start + 1 }, (_, i) => start + i);
+
+    const totalNumbers = boundaryCount * 2 + siblingCount * 2 + 3; // first, last, current
+    if (totalPages <= totalNumbers) return range(1, totalPages);
+
+    const leftSibling = Math.max(currentPage - siblingCount, boundaryCount + 2);
+    const rightSibling = Math.min(
+      currentPage + siblingCount,
+      totalPages - boundaryCount - 1
+    );
+
+    const showLeftDots = leftSibling > boundaryCount + 2;
+    const showRightDots = rightSibling < totalPages - boundaryCount - 1;
+
+    const firstPages = range(1, boundaryCount);
+    const lastPages = range(totalPages - boundaryCount + 1, totalPages);
+
+    if (!showLeftDots && showRightDots) {
+      const leftRange = range(1, rightSibling + (boundaryCount + 1 - 1));
+      return [...leftRange, DOTS, ...lastPages];
+    }
+
+    if (showLeftDots && !showRightDots) {
+      const rightRange = range(
+        leftSibling - (boundaryCount + 1 - 1),
+        totalPages
+      );
+      return [...firstPages, DOTS, ...rightRange];
+    }
+
+    return [
+      ...firstPages,
+      DOTS,
+      ...range(leftSibling, rightSibling),
+      DOTS,
+      ...lastPages,
+    ];
+  }
 
   return (
     <div className="space-y-6">
@@ -152,19 +209,60 @@ export default async function JobListSection({
 
       {/* Pagination */}
       <div className="flex flex-wrap justify-center gap-2 mt-10">
-        {Array.from({ length: last_page }, (_, i) => (
-          <Link
-            key={i + 1}
-            href={`${pagePath}${i + 1}`}
-            className={`px-4 py-2 rounded border text-sm transition ${
-              page === i + 1
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
-            }`}
-          >
-            {i + 1}
-          </Link>
-        ))}
+        {/* Prev */}
+        <Link
+          href={`${pagePath}${Math.max(1, page - 1)}`}
+          aria-disabled={page === 1}
+          className={`px-3 py-2 rounded border text-sm transition ${
+            page === 1
+              ? "bg-gray-100 text-gray-400 border-gray-200 pointer-events-none"
+              : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
+          }`}
+        >
+          Prev
+        </Link>
+
+        {getPaginationRange({
+          currentPage: page,
+          totalPages: last_page,
+          siblingCount: 1,
+          boundaryCount: 1,
+        }).map((item, idx) =>
+          item === DOTS ? (
+            <span
+              key={`dots-${idx}`}
+              className="px-3 py-2 text-gray-500 select-none"
+            >
+              {DOTS}
+            </span>
+          ) : (
+            <Link
+              key={item}
+              href={`${pagePath}${item}`}
+              className={`px-4 py-2 rounded border text-sm transition ${
+                page === item
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
+              }`}
+              aria-current={page === item ? "page" : undefined}
+            >
+              {item}
+            </Link>
+          )
+        )}
+
+        {/* Next */}
+        <Link
+          href={`${pagePath}${Math.min(last_page, page + 1)}`}
+          aria-disabled={page === last_page}
+          className={`px-3 py-2 rounded border text-sm transition ${
+            page === last_page
+              ? "bg-gray-100 text-gray-400 border-gray-200 pointer-events-none"
+              : "bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
+          }`}
+        >
+          Next
+        </Link>
       </div>
     </div>
   );
