@@ -41,10 +41,10 @@ export default function JobsLayout({
         {showHeader && (
           <>
             <h1 className="text-2xl sm:text-4xl font-bold text-center text-blue-700 mb-2">
-              Classified Jobs
+              Classified Jobs in Pakistan
             </h1>
             <p className="text-center text-gray-600 italic text-sm sm:text-base">
-              “Find the jobs you desire”
+              “Find the latest classified jobs in Pakistan. Explore fresh, part-time, remote & full-time roles in Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad and other cities of Pakistan”
             </p>
 
             {showFilters && (

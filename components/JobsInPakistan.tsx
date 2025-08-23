@@ -1,78 +1,125 @@
-'use client';
-
 import Image from 'next/image';
-import pakistan from '@/public/images/jobs_in_pakistan.png'; // Adjust based on your project structure
+import Link from 'next/link';
+import pakistan from '@/public/images/jobs_in_pakistan.png';
 
-const JobsInPakistan = () => {
+export default function JobsInPakistanPage() {
   return (
-    <>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Title */}
-        <h1 className="text-4xl font-bold text-center text-blue-600 mb-6">
-          Jobs in Pakistan
-        </h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* H1 */}
+      <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-600 mb-6">
+        Jobs in Pakistan – Latest Government & Private Vacancies
+      </h1>
 
-        {/* Main Content */}
-        <div className="flex justify-center mt-8 mb-4">
-          <Image
-            src={pakistan}
-            alt="JAP by HRPP"
-            className="rounded-lg"
-            width={400}
-            height={300}
-            placeholder="blur"
-          />
-        </div>
+      {/* Banner Image */}
+      <div className="flex justify-center mt-6 mb-6">
+        <Image
+          src={pakistan}
+          alt="Jobs in Pakistan by HR Posting Partner"
+          className="rounded-lg shadow"
+          width={400}
+          height={300}
+          placeholder="blur"
+        />
+      </div>
 
-        <div className="text-center">
-          <p className="text-xl mb-4">Hey there! Are you looking for a job in Pakistan?</p>
-          <p className="text-xl mb-6">
-            We have a WhatsApp Channel and Facebook page full of job opportunities in Pakistan.
-          </p>
+      {/* Intro */}
+      <div className="mx-auto max-w-3xl text-center space-y-4">
+        <p className="text-lg text-gray-800">
+          Finding the right <strong>jobs in Pakistan</strong> can be challenging—so we make it simple.
+          <strong> HR Posting Partner</strong> updates listings daily across government departments and
+          the private sector, including <strong>remote</strong>, <strong>part-time</strong>,
+          <strong> full-time</strong>, and <strong>freelance</strong> roles.
+        </p>
+        <p className="text-lg text-gray-800">
+          Whether you’re a fresh graduate, mid-career professional, or a skilled worker, explore
+          opportunities in <strong>Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad</strong> and
+          other major cities across Pakistan.
+        </p>
+      </div>
 
-          {/* Facebook Page Button */}
-          <div className="mb-4">
+      {/* Social Channels */}
+      <section className="mx-auto max-w-3xl mt-10">
+        <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">
+          Join Us on Facebook & WhatsApp
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="rounded-2xl border p-6 text-center shadow-sm">
+            <p className="font-medium mb-3">
+              Follow our Main Facebook Page for daily job alerts, hiring news, and fresh openings.
+            </p>
             <a
               href="https://www.facebook.com/profile.php?id=100087877179793"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-blue-500 text-white py-2 px-6 rounded-full hover:bg-blue-600"
+              className="inline-block bg-blue-600 text-white py-2 px-6 rounded-full hover:bg-blue-700"
+              aria-label="Follow HR Posting Partner on Facebook"
             >
               Facebook Page
             </a>
-            <p className="mt-2">
-              Click and follow our Facebook page containing job ads of Pakistan.
-            </p>
           </div>
 
-          {/* WhatsApp Channel Button */}
-          <div className="mb-4">
+          <div className="rounded-2xl border p-6 text-center shadow-sm">
+            <p className="font-medium mb-3">
+              Get instant job notifications directly on your phone via our Main WhatsApp Channel.
+            </p>
             <a
               href="https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-green-500 text-white py-2 px-6 rounded-full hover:bg-green-600"
+              className="inline-block bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700"
+              aria-label="Join HR Posting Partner WhatsApp Channel"
             >
               WhatsApp Channel
             </a>
-            <p className="mt-2">
-              Click and follow our WhatsApp Channel containing job ads of Pakistan.
-            </p>
           </div>
-
-          {/* Closing Message */}
-          <p className="mt-8 text-xl">
-            So what are you waiting for? Click and follow now!
-          </p>
-          <p className="mt-4 text-lg">
-            Also, invite your friends and/or family too, let’s end unemployment together.
-            <br />
-            (Note: Please do not share your resumes with us and do not request us to send you job ads separately)
-          </p>
         </div>
-      </div>
-    </>
-  );
-};
 
-export default JobsInPakistan;
+        <p className="text-center text-sm text-gray-600 mt-3">
+          By joining our Facebook Page and WhatsApp Channel, you’ll never miss important openings or deadlines.
+        </p>
+      </section>
+
+      {/* Classified Jobs */}
+      <section className="mx-auto max-w-3xl mt-12">
+        <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">
+          Explore Classified Jobs in Pakistan
+        </h2>
+        <p className="text-gray-800 text-center mb-4">
+          In addition to regular listings, we offer a dedicated <strong>Classified Jobs</strong> section—perfect
+          for quick scanning and fast applications.
+        </p>
+        <ul className="list-disc pl-6 space-y-2 text-gray-800">
+          <li>Fresh postings directly from employers</li>
+          <li>Easy-to-browse categories (IT, Banking, Education, Healthcare, Freelance)</li>
+          <li>City-wise job feeds (Karachi, Lahore, Islamabad, etc.)</li>
+          <li>Part-time and full-time classified opportunities</li>
+        </ul>
+        <div className="text-center mt-6">
+          <Link
+            href="/classified-jobs"
+            className="inline-block bg-indigo-600 text-white py-2 px-6 rounded-full hover:bg-indigo-700"
+            aria-label="Go to Classified Jobs in Pakistan"
+          >
+            Browse Classified Jobs
+          </Link>
+        </div>
+      </section>
+
+      {/* Tips */}
+      <section className="mx-auto max-w-3xl mt-12">
+        <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">
+          Tips to Get Hired Faster
+        </h2>
+        <div className="text-gray-800 space-y-2">
+          <p>• Use filters to match your skills, city, and preferred work type.</p>
+          <p>• Keep a clean, updated PDF resume ready to apply quickly.</p>
+          <p>• Apply early to high-demand roles and turn on channel alerts for instant updates.</p>
+        </div>
+        <p className="text-center text-gray-700 mt-6">
+          <strong>HR Posting Partner</strong> is committed to helping Pakistan’s job seekers connect with the right employers—quickly and reliably.
+        </p>
+      </section>
+    </div>
+  );
+}

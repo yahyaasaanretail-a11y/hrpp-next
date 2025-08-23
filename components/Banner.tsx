@@ -17,7 +17,7 @@ const Banner = () => {
       {/* Centered Text */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-          Welcome to, HR Posting Partner
+          Latest Jobs in Pakistan – Find & Apply Online
         </h1>
         <h5 className="text-base sm:text-lg md:text-xl mt-2">
           Job ke liye, HR Posting Partner.com

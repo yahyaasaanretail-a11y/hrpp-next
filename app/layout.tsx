@@ -5,6 +5,7 @@ import Script from 'next/script'; // ✅ import Script from next
 
 export const metadata = {
   title: 'HRRP Website',
+  template: '%s | HR Posting Partner', 
   description: 'Official website of HRRP',
 };
 

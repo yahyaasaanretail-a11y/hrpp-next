@@ -10,11 +10,16 @@ export default function ClassifiedJobsAd() {
         <div className="flex flex-col-reverse lg:flex-row items-center bg-white shadow-2xl rounded-2xl p-6 sm:p-10 gap-8 transition-transform group-hover:scale-[1.01] cursor-pointer">
           <div className="w-full lg:w-2/3 text-center lg:text-left space-y-4 lg:pr-8">
             <h3 className="text-2xl sm:text-3xl font-bold text-blue-500">
-              Classified Jobs
+              Classified Jobs in Pakistan
             </h3>
-            <p className="text-lg text-gray-700">
-              We are now posting job ads on our website.
+
+            {/* ✅ Added description */}
+            <p className="text-gray-800 text-base sm:text-lg">
+              Find the latest classified jobs in Pakistan. Explore fresh,
+              part-time, remote & full-time roles in Karachi, Lahore, Islamabad,
+              Rawalpindi, Faisalabad and other cities of Pakistan.
             </p>
+
             <p className="text-gray-800 font-medium">
               You can search for jobs you desire with our{" "}
               <span className="font-semibold">

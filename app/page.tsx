@@ -6,7 +6,25 @@ import HomePageSlider from '@/components/HomePageSlider';
 import ClassifiedJobsAd from '@/components/ClassifiedJobsAd';
 
 export const metadata = {
-  title: 'Home',
+  title: 'HR Posting Partner | Job Portal Pakistan',
+  description:
+    'HR Posting Partner helps job seekers in Pakistan find the latest jobs and recruiters hire the best talent along with advertising opportunity for businesses and companies. Post jobs free and search hundreds of listings today.',
+  keywords: [
+    'jobs in Pakistan',
+    'HR Posting Partner',
+    'job portal Pakistan',
+    'latest jobs Pakistan',
+    'post jobs free',
+    'recruitment platform Pakistan',
+  ],
+  openGraph: {
+    title: 'HR Posting Partner | Job Portal Pakistan',
+    description:
+      'Find the latest jobs in Pakistan and hire the best talent with HR Posting Partner. Post jobs free, search listings, and advertise your business today.',
+    url: 'https://yourdomain.com', // replace with your domain
+    siteName: 'HR Posting Partner',
+    type: 'website',
+  },
 };
 
 export default function HomePage() {
