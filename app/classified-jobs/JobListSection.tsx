@@ -165,9 +165,33 @@ export default async function JobListSection({
                 <ShareButton title={job.slug} />
               </div>
 
-              <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-1 text-xs text-gray-500">
-                <p>Posted: {job.posted_at}</p>
-                <p>Expires: {job.expiry_date ?? "N/A"}</p>
+              <div className="flex items-center justify-between text-xs text-gray-600">
+                {/* Dates on the left */}
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  <p>
+                    <span className="font-semibold text-gray-700">Posted:</span>{" "}
+                    {job.posted_at}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-700">
+                      Expires:
+                    </span>{" "}
+                    {job.expiry_date ?? "N/A"}
+                  </p>
+                </div>
+
+                {/* Status Badge on the right */}
+                <span
+                  className={`px-2 py-1 rounded-full font-medium ml-4 ${
+                    job.expiry_date && new Date(job.expiry_date) >= new Date()
+                      ? "bg-green-100 text-green-700 border border-green-300"
+                      : "bg-red-100 text-red-700 border border-red-300"
+                  }`}
+                >
+                  {job.expiry_date && new Date(job.expiry_date) >= new Date()
+                    ? "Active"
+                    : "Expired"}
+                </span>
               </div>
             </div>
           </div>

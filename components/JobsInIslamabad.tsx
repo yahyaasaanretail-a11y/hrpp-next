@@ -117,6 +117,19 @@ export default function JobsInIslamabadRawalpindiPage() {
           </Link>
         </div>
       </section>
+      <section className="mx-auto max-w-3xl mt-12">
+        <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">
+          Tips to Get Hired Faster
+        </h2>
+        <div className="text-gray-800 space-y-2">
+          <p>• Use filters to match your skills, city, and preferred work type.</p>
+          <p>• Keep a clean, updated PDF resume ready to apply quickly.</p>
+          <p>• Apply early to high-demand roles and turn on channel alerts for instant updates.</p>
+        </div>
+        <p className="text-center text-gray-700 mt-6">
+          <strong>HR Posting Partner</strong> is committed to helping Pakistan’s job seekers connect with the right employers—quickly and reliably.
+        </p>
+      </section>
     </div>
   );
 }

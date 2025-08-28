@@ -15,6 +15,8 @@ export default function Footer() {
   const importantLinks = [
     { name: 'Terms & Conditions', href: '/terms-and-conditions' },
     { name: 'Feedback Form', href: 'https://docs.google.com/forms/d/18JtWOD_mZB0sIavYudSkZF-ZIlRuEYlOoR7HZwQ7zZ8/edit?usp=drivesdk' },
+    { name: 'Privacy Policy', href: '/privacy-policy' },
+    
   ];
 
   const informationLinks = [

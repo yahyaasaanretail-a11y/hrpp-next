@@ -9,6 +9,17 @@ const TermsAndConditions = () => (
         Terms and Conditions
       </h3>
     </div>
+     {/* Dates */}
+     <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-1 text-xs text-gray-500 mb-6">
+      <p>
+        <span className="font-semibold text-gray-700">Effective Date:</span>{" "}
+        August 29, 2025
+      </p>
+      <p>
+        <span className="font-semibold text-gray-700">Last Updated:</span>{" "}
+        August 29, 2025
+      </p>
+    </div>
 
     {/* Main Content */}
     <div className="text-sm sm:text-base text-gray-800 space-y-6">
