@@ -153,10 +153,10 @@ const PrivacyPolicy = () => (
         <p className="mt-2">
           To exercise these rights, contact us at{" "}
           <a
-            href="mailto:info@hrpostingpartner.com"
+            href="mailto:contact@hrpostingpartner.com"
             className="text-blue-600 hover:underline"
           >
-            info@hrpostingpartner.com
+            contact@hrpostingpartner.com
           </a>
           .
         </p>

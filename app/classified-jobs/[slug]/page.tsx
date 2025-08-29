@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ShareButton from "@/components/ShareButton";
-import JobImageSlider from '@/components/JobImageSlider'; 
+import JobImageSlider from "@/components/JobImageSlider";
 
 export const revalidate = 60;
 
@@ -51,11 +51,29 @@ export default async function Page({
       </div>
 
       <div className="space-y-2 text-sm text-gray-600 mb-6">
-        <p>
-          <strong>📍 Locations:</strong>{" "}
-          {job.locations?.map((l: any) => l.name || l.text).join(", ") || "N/A"}
-        </p>
-        <p>
+      <div className="flex items-center justify-between text-gray-600">
+  {/* Locations on the left */}
+  <span className="m-0 inline-block">
+    <strong>📍 Locations:</strong>{" "}
+    {job.locations?.map((l: any) => l.name || l.text).join(", ") || "N/A"}
+  </span>
+
+  {/* Status Badge on the right */}
+  <span
+    className={`px-2 py-1 rounded-full font-medium ml-4 ${
+      job.expiry_date && new Date(job.expiry_date) >= new Date()
+        ? "bg-green-100 text-green-700 border border-green-300"
+        : "bg-red-100 text-red-700 border border-red-300"
+    }`}
+  >
+    {job.expiry_date && new Date(job.expiry_date) >= new Date()
+      ? "Active"
+      : "Expired"}
+  </span>
+</div>
+
+
+        <p >
           <strong>👨‍💼 Roles:</strong>{" "}
           {job.roles?.map((r: any) => r.name || r.text).join(", ") || "N/A"}
         </p>
@@ -85,7 +103,8 @@ export default async function Page({
 
       <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
         <p className="mt-2">
-          <strong>How to apply:</strong> Kindly click or right-click to copy and paste the email or link provided above.
+          <strong>How to apply:</strong> Kindly click or right-click to copy and
+          paste the email or link provided above.
         </p>
       </div>
       <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700 break-words">
@@ -130,7 +149,6 @@ export default async function Page({
           </a>
         </p>
       </div>
-      
 
       <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
         <p>Want your job ad here?</p>
@@ -152,13 +170,10 @@ export default async function Page({
           </a>
           .
         </p>
-        <p className="mt-2">Note: Do not send your resume or contact us by phone.</p>
+        <p className="mt-2">
+          Note: Do not send your resume or contact us by phone.
+        </p>
       </div>
-
-      
-
-
-      
     </div>
   );
 }
