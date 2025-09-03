@@ -32,6 +32,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+
+        {/* ✅ Google AdSense Script */}
+        <Script
+          id="adsense-script"
+          strategy="afterInteractive"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3826573131304099"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="min-h-screen bg-white text-gray-900">
         <Header />
