@@ -3,6 +3,7 @@ import JobCards from '@/components/JobCards';
 import RecruiterSection from '@/components/RecruiterSection';
 import HomePageSlider from '@/components/HomePageSlider';
 import ClassifiedJobsAd from '@/components/ClassifiedJobsAd';
+import { useEffect } from 'react';
 
 export const metadata = {
   title: 'HR Posting Partner | Job Portal Pakistan',
@@ -27,10 +28,18 @@ export const metadata = {
 };
 
 export default function HomePage() {
+
+  useEffect(() => {
+    // Ensure the ad is loaded after the component has mounted
+    if (window.adsbygoogle && window.adsbygoogle.length) {
+      window.adsbygoogle.push({});
+    }
+  }, []); // Empty dependency array ensures this runs only once when component mounts
   return (
     <main className="flex flex-col">
       <Banner />
       
+      {/* Google Ad Banner */}
       {/* Google Ad Banner */}
       <script
         async
@@ -45,9 +54,6 @@ export default function HomePage() {
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
 
       <section className="px-4 md:px-12">
         <ClassifiedJobsAd />
