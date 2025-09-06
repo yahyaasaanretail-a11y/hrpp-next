@@ -1,14 +1,20 @@
-    'use client'
-    // Example of a manual ad unit component
-    import React, { useEffect } from 'react';
+'use client';
 
-const AdUnit = ({ slotId }) => {
+import React, { useEffect } from 'react';
+
+interface AdUnitProps {
+  slotId: string;
+}
+
+const AdUnit: React.FC<AdUnitProps> = ({ slotId }) => {
   useEffect(() => {
-    // Dynamically load the AdSense script if it isn't already loaded
+    // Dynamically load the AdSense script if not already loaded
     if (!window.adsbygoogle) {
       const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3826573131304099';
+      script.src =
+        'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3826573131304099';
       script.async = true;
+      script.crossOrigin = 'anonymous';
       script.onload = () => {
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -18,20 +24,20 @@ const AdUnit = ({ slotId }) => {
       };
       document.head.appendChild(script);
     } else {
-      // If the script is already loaded, push the ad
+      // If the script is already loaded
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     }
-  }, []); // Only run once when the component mounts
+  }, []);
 
   return (
     <ins
       className="adsbygoogle"
       style={{ display: 'block' }}
       data-ad-client="ca-pub-3826573131304099"
-      data-ad-slot={slotId} // Dynamically set the ad slot ID
+      data-ad-slot={slotId}
       data-ad-format="auto"
       data-full-width-responsive="true"
-    ></ins>
+    />
   );
 };
 

@@ -36,7 +36,7 @@ export default function HomePage() {
       
       {/* Google Ad Banner */}
       {/* Google Ad Banner */}
-      <AdUnit slotId={9389960073}/>
+      <AdUnit slotId="9389960073"/>
 
       <section className="px-4 md:px-12">
         <ClassifiedJobsAd />

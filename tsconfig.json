@@ -1,25 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
+    "target": "ES2017",                           // Modern JS target
+    "lib": ["dom", "dom.iterable", "esnext"],    // Include DOM & ESNext features
+    "allowJs": true,                             // Allow JavaScript files
+    "skipLibCheck": true,                         // Skip checking .d.ts files
+    "strict": false,                              // You can enable later with true for better TS safety
+    "noEmit": true,                               // Don't emit output, Next.js handles this
+    "esModuleInterop": true,                      // Enable default import interop
+    "module": "esnext",                           // Module system
+    "moduleResolution": "node",                   // Standard module resolution
+    "resolveJsonModule": true,                    // Allow importing JSON files
+    "isolatedModules": true,                       // Each file is treated as a module
+    "jsx": "preserve",                            // JSX handled by Next.js
+    "incremental": true,                          // Faster builds with incremental compilation
     "plugins": [
-      {
-        "name": "next"
-      }
+      { "name": "next" }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"]                              // Path alias for imports
     }
   },
   "include": [
@@ -27,7 +25,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "tailwind.config.js"
+    "global.d.ts"                                 // Your global types file
   ],
   "exclude": ["node_modules"]
 }
