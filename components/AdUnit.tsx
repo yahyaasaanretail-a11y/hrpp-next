@@ -1,3 +1,4 @@
+    'use client'
     // Example of a manual ad unit component
     import React, { useEffect } from 'react';
 
