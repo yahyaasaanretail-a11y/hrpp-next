@@ -1,5 +1,4 @@
 import Banner from '@/components/Banner';
-import SponsoredAd from '@/components/SponsoredAd';
 import JobCards from '@/components/JobCards';
 import RecruiterSection from '@/components/RecruiterSection';
 import HomePageSlider from '@/components/HomePageSlider';
@@ -31,7 +30,25 @@ export default function HomePage() {
   return (
     <main className="flex flex-col">
       <Banner />
-      <SponsoredAd />
+      
+      {/* Google Ad Banner */}
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3826573131304099"
+        crossOrigin="anonymous"
+      ></script>
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client="ca-pub-3826573131304099"
+        data-ad-slot="9389960073"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
       <section className="px-4 md:px-12">
         <ClassifiedJobsAd />
         <JobCards />
