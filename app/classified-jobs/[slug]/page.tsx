@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import ShareButton from "@/components/ShareButton";
 import JobImageSlider from "@/components/JobImageSlider";
 import AdUnit from "@/components/AdUnit";
-import AdUnitVertical from "@/components/AdUnitVertical";
 
 export const revalidate = 60;
 
@@ -89,16 +88,6 @@ export default async function Page({
         <strong>⏳ Expires:</strong> {job.expiry_date ?? "N/A"}
       </p>
     </div>
-  
-    {/* Vertical Ads on Left Side */}
-    {/* <div className="sm:hidden lg:flex flex-col items-start fixed left-0 top-1/3 w-1/5">
-      <AdUnitVertical slotId="6098825591" />
-    </div> */}
-  
-    {/* Vertical Ads on Right Side */}
-    {/* <div className="sm:hidden lg:flex flex-col items-end fixed right-0 top-1/3 w-1/5">
-      <AdUnitVertical slotId="6098825593" />
-    </div> */}
   
     <AdUnit slotId="6098825591" />
   
