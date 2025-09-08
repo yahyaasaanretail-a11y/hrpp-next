@@ -91,7 +91,7 @@ export default async function Page({
         </p>
       </div>
 
-      <AdUnit slotId="9389960073"/>
+      <AdUnit slotId="6098825591"/>
 
       {job.images && (
         <JobImageSlider images={job.images} title={job.job_title} />
