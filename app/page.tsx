@@ -42,12 +42,12 @@ export default function HomePage() {
         <ClassifiedJobsAd />
         <JobCards />
       </section>
-      <AdUnit slotId="9389960073"/>
+      <AdUnit slotId="5491448797"/>
       <RecruiterSection />
       <section>
         <HomePageSlider />
       </section>
-      <AdUnit slotId="9389960073"/>
+      <AdUnit slotId="7411907265"/>
     </main>
   );
 }
