@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ShareButton from "@/components/ShareButton";
 import JobImageSlider from "@/components/JobImageSlider";
+import AdUnit from "@/components/AdUnit";
 
 export const revalidate = 60;
 
@@ -89,6 +90,8 @@ export default async function Page({
           <strong>⏳ Expires:</strong> {job.expiry_date ?? "N/A"}
         </p>
       </div>
+
+      <AdUnit slotId="9389960073"/>
 
       {job.images && (
         <JobImageSlider images={job.images} title={job.job_title} />

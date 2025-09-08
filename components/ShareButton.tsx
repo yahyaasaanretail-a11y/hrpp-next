@@ -15,8 +15,7 @@ const ShareButton = ({ title }) => {
   if (!canShare) return null;
 
   return (
-    <a
-      href="#"
+    <div
       onClick={(e) => {
         e.preventDefault();
         navigator.share({
@@ -25,11 +24,11 @@ const ShareButton = ({ title }) => {
           url: window.location.href,
         });
       }}
-      className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+      className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"
     >
       <Share2 className="w-4 h-4" />
       Share this job
-    </a>
+    </div>
   );
 };
 
