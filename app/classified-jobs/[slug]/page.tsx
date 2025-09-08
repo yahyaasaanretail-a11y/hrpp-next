@@ -52,29 +52,29 @@ export default async function Page({
       </div>
 
       <div className="space-y-2 text-sm text-gray-600 mb-6">
-      <div className="flex items-center justify-between text-gray-600">
-  {/* Locations on the left */}
-  <span className="m-0 inline-block">
-    <strong>📍 Locations:</strong>{" "}
-    {job.locations?.map((l: any) => l.name || l.text).join(", ") || "N/A"}
-  </span>
+        <div className="flex items-center justify-between text-gray-600">
+          {/* Locations on the left */}
+          <span className="m-0 inline-block">
+            <strong>📍 Locations:</strong>{" "}
+            {job.locations?.map((l: any) => l.name || l.text).join(", ") ||
+              "N/A"}
+          </span>
 
-  {/* Status Badge on the right */}
-  <span
-    className={`px-2 py-1 rounded-full font-medium ml-4 ${
-      job.expiry_date && new Date(job.expiry_date) >= new Date()
-        ? "bg-green-100 text-green-700 border border-green-300"
-        : "bg-red-100 text-red-700 border border-red-300"
-    }`}
-  >
-    {job.expiry_date && new Date(job.expiry_date) >= new Date()
-      ? "Active"
-      : "Expired"}
-  </span>
-</div>
+          {/* Status Badge on the right */}
+          <span
+            className={`px-2 py-1 rounded-full font-medium ml-4 ${
+              job.expiry_date && new Date(job.expiry_date) >= new Date()
+                ? "bg-green-100 text-green-700 border border-green-300"
+                : "bg-red-100 text-red-700 border border-red-300"
+            }`}
+          >
+            {job.expiry_date && new Date(job.expiry_date) >= new Date()
+              ? "Active"
+              : "Expired"}
+          </span>
+        </div>
 
-
-        <p >
+        <p>
           <strong>👨‍💼 Roles:</strong>{" "}
           {job.roles?.map((r: any) => r.name || r.text).join(", ") || "N/A"}
         </p>
@@ -91,7 +91,7 @@ export default async function Page({
         </p>
       </div>
 
-      <AdUnit slotId="6098825591"/>
+      <AdUnit slotId="6098825591" />
 
       {job.images && (
         <JobImageSlider images={job.images} title={job.job_title} />
