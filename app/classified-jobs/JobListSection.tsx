@@ -1,6 +1,7 @@
 // app/jobs/JobListSection.tsx
 import Link from "next/link";
 import ShareButton from "@/components/ShareButton";
+import InFeedAdUnit from "@/components/InFeedAdUnit";
 
 export const revalidate = 60;
 
@@ -74,6 +75,12 @@ export default async function JobListSection({
     return <p className="text-center text-gray-500">No jobs found.</p>;
   }
 
+  // Split jobs into chunks of 5
+  const chunkedJobs = [];
+  for (let i = 0; i < jobs.length; i += 5) {
+    chunkedJobs.push(jobs.slice(i, i + 5));
+  }
+
   const queryString = new URLSearchParams(
     Object.entries(searchParams || {}).reduce((acc, [key, value]) => {
       if (key !== "page" && typeof value === "string") {
@@ -142,7 +149,9 @@ export default async function JobListSection({
 
   return (
     <div className="space-y-6">
-      {jobs.map((job) => (
+      {chunkedJobs.map((chunk, idx) => (
+        <div key={idx}>
+      {chunk.map((job) => (
         <Link
           key={job.id}
           href={`/classified-jobs/${job.slug}`}
@@ -230,6 +239,12 @@ export default async function JobListSection({
           </div>
         </Link>
       ))}
+      <div>
+        <InFeedAdUnit slotId="3398572260" />
+        </div>
+      </div>
+      ))}
+
 
       {/* Pagination */}
       <div className="flex flex-wrap justify-center gap-2 mt-10">
