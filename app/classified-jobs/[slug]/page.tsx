@@ -99,6 +99,14 @@ export default async function Page({
                prose-a:underline prose-a:text-blue-600 prose-a:hover:text-blue-800"
       dangerouslySetInnerHTML={{ __html: job.description ?? "" }}
     />
+
+      {/* Disclaimer Section */}
+      <div className="mt-6">
+      <p className="font-semibold">Disclaimer:</p>
+      <p>
+        HR Posting Partner is not hiring for this position, we just post job ads for other companies. Spread the word "Job ke liye, HRPostingPartner.com".
+      </p>
+    </div>
   
     <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-sm text-gray-700">
       <p className="mt-2">
