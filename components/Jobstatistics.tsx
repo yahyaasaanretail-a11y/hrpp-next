@@ -10,7 +10,7 @@ const JobStatistics = () => {
           {/* Job Ads */}
           <div className="flex flex-col items-center text-white">
             <FaBriefcase className="text-3xl md:text-4xl mb-2" />
-            <p className="text-sm md:text-lg font-semibold">500+ job ads every week</p>
+            <p className="text-sm md:text-lg font-semibold">500+ jobs every week</p>
           </div>
 
           {/* Found Jobs */}
