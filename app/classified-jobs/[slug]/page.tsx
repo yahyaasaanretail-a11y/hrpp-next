@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ShareButton from "@/components/ShareButton";
 import JobImageSlider from "@/components/JobImageSlider";
 import AdUnit from "@/components/AdUnit";
+import SchemaMarkup from "@/components/SchemaMarkup";
 
 export const revalidate = 60;
 
@@ -42,12 +43,41 @@ export default async function Page({
   const { slug } = await params;
   const job = await getJob(slug);
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": job.job_title,
+    "description": job.short_description || job.description || "",
+    "datePosted": job.posted_at,
+    "validThrough": job.expiry_date ?? "",
+    "employmentType": "Full-time",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "Confidential Employer"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "HR Posting Partner",
+      "sameAs": "https://www.hrpostingpartner.com",
+      "logo": "https://www.hrpostingpartner.com/logo.png"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": job.locations?.map((l: any) => l.name).join(", ") || "N/A",
+        "addressCountry": "PK"
+      }
+    }
+  };
+
   if (!job) notFound();
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-2">
       <h1 className="text-3xl font-bold text-gray-800">{job.job_title}</h1>
+      <SchemaMarkup schema={schema} /> 
       <ShareButton title={job.job_title} />
     </div>
   
