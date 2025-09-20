@@ -2,26 +2,50 @@
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    console.log("here");
   const baseUrl = "https://www.hrpostingpartner.com";
 
-  // 1. Fetch jobs from your API
-  let jobs: any[] = [];
-  try {
-    const res = await fetch("https://admin.hrpostingpartner.com/api/jobs", {
-      // Revalidate cache every 60s
-      next: { revalidate: 60 },
-    });
+  // Helper to fetch all jobs across pages
+  async function fetchAllJobs(): Promise<any[]> {
+    let jobs: any[] = [];
+    let page = 1;
+    let hasMore = true;
 
-    if (res.ok) {
-      const data = await res.json();
-      jobs = Array.isArray(data) ? data : data.data || [];
+    while (hasMore) {
+      try {
+        const res = await fetch(
+          `https://admin.hrpostingpartner.com/api/jobs?page=${page}`,
+          {
+            next: { revalidate: 60 },
+          }
+        );
+
+        if (!res.ok) break;
+
+        const data = await res.json();
+
+        // adjust if your API uses a different structure
+        const jobData = Array.isArray(data.data) ? data.data : [];
+        jobs = jobs.concat(jobData);
+
+        // check pagination
+        if (data.meta && data.meta.current_page < data.meta.last_page) {
+          page++;
+        } else {
+          hasMore = false;
+        }
+      } catch (error) {
+        console.error("Error fetching jobs for sitemap:", error);
+        hasMore = false;
+      }
     }
-  } catch (error) {
-    console.error("Error fetching jobs for sitemap:", error);
+
+    return jobs;
   }
 
-  // 2. Static routes
+  // Fetch jobs
+  const jobs = await fetchAllJobs();
+
+  // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/`,
@@ -49,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 3. Dynamic job pages
+  // Dynamic job pages
   const jobPages: MetadataRoute.Sitemap = jobs.map((job: any) => ({
     url: `${baseUrl}/classified-jobs/${job.slug}`,
     lastModified: job.updated_at ? new Date(job.updated_at) : new Date(),
@@ -57,6 +81,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // 4. Return combined sitemap
   return [...staticPages, ...jobPages];
 }
