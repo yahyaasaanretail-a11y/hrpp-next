@@ -7,15 +7,41 @@ import SchemaMarkup from "@/components/SchemaMarkup";
 
 export const revalidate = 60;
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function getJob(slug: string) {
-  const res = await fetch(
-    `https://admin.hrpostingpartner.com/api/jobs/${slug}`,
-    {
-      next: { revalidate: 60 },
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 60000); // 1 min hard timeout
+
+  try {
+    const res = await fetch(
+      `https://admin.hrpostingpartner.com/api/jobs/${slug}`,
+      {
+        next: { revalidate: 60 },
+        signal: controller.signal,
+      }
+    );
+
+    clearTimeout(timeout);
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+
+    // ensure at least 1 min wait before responding
+    await sleep(60000);
+
+    return data;
+  } catch (error) {
+    if (error.name === "AbortError") {
+      console.error("Request timed out after 1 minute");
+    } else {
+      console.error("Fetch failed:", error);
     }
-  );
-  if (!res.ok) return null;
-  return res.json();
+    return null;
+  }
 }
 
 // ✅ generateMetadata can stay sync with the correct type
