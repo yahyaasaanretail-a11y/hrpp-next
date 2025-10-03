@@ -7,41 +7,15 @@ import SchemaMarkup from "@/components/SchemaMarkup";
 
 export const revalidate = 60;
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 async function getJob(slug: string) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60000); // 1 min hard timeout
-
-  try {
-    const res = await fetch(
-      `https://admin.hrpostingpartner.com/api/jobs/${slug}`,
-      {
-        next: { revalidate: 60 },
-        signal: controller.signal,
-      }
-    );
-
-    clearTimeout(timeout);
-
-    if (!res.ok) return null;
-
-    const data = await res.json();
-
-    // ensure at least 1 min wait before responding
-    await sleep(60000);
-
-    return data;
-  } catch (error) {
-    if (error.name === "AbortError") {
-      console.error("Request timed out after 1 minute");
-    } else {
-      console.error("Fetch failed:", error);
+  const res = await fetch(
+    `https://admin.hrpostingpartner.com/api/jobs/${slug}`,
+    {
+      next: { revalidate: 60 },
     }
-    return null;
-  }
+  );
+  if (!res.ok) return null;
+  return res.json();
 }
 
 // ✅ generateMetadata can stay sync with the correct type
@@ -187,15 +161,15 @@ export default async function Page({
       </p>
   
       <p className="mt-2">
-        <span className="font-medium">Facebook Page:</span>
+        <span className="font-medium">Continuous Individual Job Ads  → HRPP 2.0 WAC:</span>
         <br />
         <a
-          href="https://www.facebook.com/profile.php?id=100087877179793"
+          href="https://whatsapp.com/channel/0029VbAxrB572WTxgZBSbp1I "
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline hover:text-blue-800 break-all"
         >
-          https://www.facebook.com/profile.php?id=100087877179793
+          https://whatsapp.com/channel/0029VbAxrB572WTxgZBSbp1I
         </a>
       </p>
   
