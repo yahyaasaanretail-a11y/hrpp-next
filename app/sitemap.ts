@@ -42,8 +42,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return jobs;
   }
 
+  async function fetchBlogPosts(): Promise<
+    { slug: string; published_at?: string | null }[]
+  > {
+    try {
+      const res = await fetch(
+        "https://admin.hrpostingpartner.com/api/blogs/categories",
+        {
+          next: { revalidate: 300 },
+        }
+      );
+
+      if (!res.ok) {
+        return [];
+      }
+
+      const data = await res.json();
+      const categories = Array.isArray(data?.data) ? data.data : [];
+
+      const uniquePosts = new Map<string, { slug: string; published_at?: string | null }>();
+
+      categories.forEach((category: any) => {
+        if (Array.isArray(category?.posts)) {
+          category.posts.forEach((post: any) => {
+            if (post?.slug && !uniquePosts.has(post.slug)) {
+              uniquePosts.set(post.slug, {
+                slug: post.slug,
+                published_at: post.published_at ?? null,
+              });
+            }
+          });
+        }
+      });
+
+      return Array.from(uniquePosts.values());
+    } catch (error) {
+      console.error("Error fetching blogs for sitemap:", error);
+      return [];
+    }
+  }
+
   // Fetch jobs
   const jobs = await fetchAllJobs();
+  const blogPosts = await fetchBlogPosts();
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -58,6 +99,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "hourly",
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blogs`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/about-us`,
@@ -81,5 +128,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...jobPages];
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blogs/${post.slug}`,
+    lastModified: post.published_at ? new Date(post.published_at) : new Date(),
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...jobPages, ...blogPages];
 }

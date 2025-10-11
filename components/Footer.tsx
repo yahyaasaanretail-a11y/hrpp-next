@@ -7,6 +7,7 @@ import { Facebook, Linkedin, Phone, ChevronRight } from 'lucide-react';
 export default function Footer() {
   const services = [
     { name: 'Classified Jobs', href: '/classified-jobs' },
+    { name: 'Blogs', href: '/blogs' },
     { name: 'Advertise with Us', href: '/advertise-with-us' },
     { name: 'Special Presence Job Ads', href: '/special-presence-job-ads' },
     { name: 'Open Platforms', href: '/open-platforms' },
