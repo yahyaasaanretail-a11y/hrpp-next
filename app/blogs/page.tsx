@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import BlogSearch from "@/components/BlogSearch";
 
 const API_BASE_URL = "https://admin.hrpostingpartner.com/api";
 
@@ -69,56 +70,65 @@ export default async function BlogsPage() {
           <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
             HR Posting Partner Blog
           </span>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">
             Insights, hiring tips, and updates for modern recruiters
           </h1>
-          <p className="mt-4 text-base text-gray-600 sm:text-lg">
+          <p className="mt-3 text-base text-gray-600 sm:text-lg">
             Browse our latest articles by category. Each section highlights up to
             three recent posts so you can quickly dive into the topics that
             matter most to you.
           </p>
         </div>
 
+        <div className="mx-auto mt-8 max-w-2xl">
+          <BlogSearch />
+        </div>
+
         {categories.length === 0 ? (
-          <p className="mt-16 text-center text-gray-500">
+          <p className="mt-12 text-center text-gray-500">
             Blogs are on their way. Please check back soon.
           </p>
         ) : (
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {categories.map((category) => {
               const postsToDisplay = category.posts.slice(0, 3);
+              const initials = (
+                category.name ||
+                category.slug ||
+                "HR"
+              )
+                .slice(0, 2)
+                .toUpperCase();
 
               return (
                 <article
                   key={category.id}
-                  className="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                  className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white/90 shadow-sm transition hover:border-blue-200 hover:shadow-md"
                 >
-                  {category.image_url ? (
-                    <div className="relative h-44 w-full">
+                  {category.image_url && (
+                    <div className="relative aspect-[5/2.5] w-full">
                       <Image
                         src={category.image_url}
                         alt={category.name}
                         fill
                         className="object-cover"
-                        sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        priority={false}
+                        sizes="(min-width: 1280px) 380px, (min-width: 640px) 45vw, 100vw"
                       />
-                    </div>
-                  ) : (
-                    <div className="flex h-44 w-full items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
-                      <span className="text-xl font-semibold text-blue-700">
-                        {category.name}
-                      </span>
                     </div>
                   )}
 
-                  <div className="flex flex-1 flex-col p-6">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h2 className="text-xl font-semibold text-gray-900">
-                        {category.name}
-                      </h2>
+                  <div className="flex flex-col gap-4 p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold uppercase text-blue-700">
+                          {initials}
+                        </span>
+                        <h2 className="text-lg font-semibold text-gray-900">
+                          {category.name}
+                        </h2>
+                      </div>
                       {category.posts.length > 0 && (
-                        <span className="text-sm font-medium text-blue-600">
+                        <span className="text-xs font-medium uppercase tracking-wide text-blue-600">
                           {category.posts.length}{" "}
                           {category.posts.length === 1 ? "post" : "posts"}
                         </span>
@@ -126,46 +136,31 @@ export default async function BlogsPage() {
                     </div>
 
                     {postsToDisplay.length === 0 ? (
-                      <p className="mt-6 text-sm text-gray-500">
+                      <p className="mt-5 text-sm text-gray-500">
                         We are preparing fresh content for this category. Stay
                         tuned!
                       </p>
                     ) : (
-                      <div className="mt-6 space-y-4">
+                      <ul className="mt-5 space-y-2">
                         {postsToDisplay.map((post) => (
-                          <Link
-                            key={post.id}
-                            href={`/blogs/${post.slug}`}
-                            className="group flex gap-4 rounded-xl border border-gray-100 p-4 transition hover:border-blue-200 hover:bg-blue-50/40"
-                          >
-                            {post.image_url ? (
-                              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                                <Image
-                                  src={post.image_url}
-                                  alt={post.title}
-                                  fill
-                                  className="object-cover transition duration-300 group-hover:scale-105"
-                                  sizes="80px"
-                                />
-                              </div>
-                            ) : (
-                              <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 text-sm font-semibold text-blue-700">
-                                {category.name.slice(0, 2).toUpperCase()}
-                              </div>
+                          <li key={post.id} className="flex flex-col">
+                            <Link
+                              href={`/blogs/${post.slug}`}
+                              className="group inline-flex items-center gap-2 text-sm font-medium text-blue-700 transition hover:text-blue-800"
+                            >
+                              <span className="line-clamp-2">{post.title}</span>
+                              <span className="text-xs text-blue-300 transition group-hover:translate-x-1">
+                                →
+                              </span>
+                            </Link>
+                            {post.published_at && (
+                              <span className="text-xs text-gray-400">
+                                {post.published_at}
+                              </span>
                             )}
-                            <div className="flex flex-col justify-center">
-                              <h3 className="text-sm font-semibold text-gray-900 transition group-hover:text-blue-700">
-                                {post.title}
-                              </h3>
-                              {post.published_at && (
-                                <p className="mt-2 text-xs text-gray-500">
-                                  {post.published_at}
-                                </p>
-                              )}
-                            </div>
-                          </Link>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     )}
                   </div>
                 </article>
