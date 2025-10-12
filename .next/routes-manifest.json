@@ -1,0 +1,176 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/blogs/[slug]",
+      "regex": "^/blogs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/blogs/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/classified-jobs/page/[page]",
+      "regex": "^/classified\\-jobs/page/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPpage": "nxtPpage"
+      },
+      "namedRegex": "^/classified\\-jobs/page/(?<nxtPpage>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/classified-jobs/[slug]",
+      "regex": "^/classified\\-jobs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/classified\\-jobs/(?<nxtPslug>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/about-us",
+      "regex": "^/about\\-us(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about\\-us(?:/)?$"
+    },
+    {
+      "page": "/advertise-with-us",
+      "regex": "^/advertise\\-with\\-us(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/advertise\\-with\\-us(?:/)?$"
+    },
+    {
+      "page": "/blogs",
+      "regex": "^/blogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blogs(?:/)?$"
+    },
+    {
+      "page": "/classified-jobs",
+      "regex": "^/classified\\-jobs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/classified\\-jobs(?:/)?$"
+    },
+    {
+      "page": "/contact-us",
+      "regex": "^/contact\\-us(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact\\-us(?:/)?$"
+    },
+    {
+      "page": "/jobs-in-faisalabad",
+      "regex": "^/jobs\\-in\\-faisalabad(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs\\-in\\-faisalabad(?:/)?$"
+    },
+    {
+      "page": "/jobs-in-islamabad-rawalpindi",
+      "regex": "^/jobs\\-in\\-islamabad\\-rawalpindi(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs\\-in\\-islamabad\\-rawalpindi(?:/)?$"
+    },
+    {
+      "page": "/jobs-in-karachi",
+      "regex": "^/jobs\\-in\\-karachi(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs\\-in\\-karachi(?:/)?$"
+    },
+    {
+      "page": "/jobs-in-lahore",
+      "regex": "^/jobs\\-in\\-lahore(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs\\-in\\-lahore(?:/)?$"
+    },
+    {
+      "page": "/jobs-in-pakistan",
+      "regex": "^/jobs\\-in\\-pakistan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs\\-in\\-pakistan(?:/)?$"
+    },
+    {
+      "page": "/jobs-internships-for-non-experienced",
+      "regex": "^/jobs\\-internships\\-for\\-non\\-experienced(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/jobs\\-internships\\-for\\-non\\-experienced(?:/)?$"
+    },
+    {
+      "page": "/open-platforms",
+      "regex": "^/open\\-platforms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/open\\-platforms(?:/)?$"
+    },
+    {
+      "page": "/privacy-policy",
+      "regex": "^/privacy\\-policy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/privacy\\-policy(?:/)?$"
+    },
+    {
+      "page": "/remote-jobs-for-pakistan",
+      "regex": "^/remote\\-jobs\\-for\\-pakistan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/remote\\-jobs\\-for\\-pakistan(?:/)?$"
+    },
+    {
+      "page": "/sitemap.xml",
+      "regex": "^/sitemap\\.xml(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sitemap\\.xml(?:/)?$"
+    },
+    {
+      "page": "/special-presence-job-ads",
+      "regex": "^/special\\-presence\\-job\\-ads(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/special\\-presence\\-job\\-ads(?:/)?$"
+    },
+    {
+      "page": "/terms-and-conditions",
+      "regex": "^/terms\\-and\\-conditions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/terms\\-and\\-conditions(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+    "prefetchHeader": "Next-Router-Prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "Next-Router-Segment-Prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  },
+  "rewrites": []
+}

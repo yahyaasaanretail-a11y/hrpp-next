@@ -53,13 +53,14 @@ const getBlog = cache(async (slug: string): Promise<BlogDetail | null> => {
 });
 
 type BlogPageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: BlogPageProps): Promise<Metadata> {
-  const blog = await getBlog(params.slug);
+  const { slug } = await params;
+  const blog = await getBlog(slug);
 
   if (!blog) {
     return {
@@ -123,7 +124,8 @@ function formatPublishedDate(blog: BlogDetail): string | null {
 }
 
 export default async function BlogDetailPage({ params }: BlogPageProps) {
-  const blog = await getBlog(params.slug);
+  const { slug } = await params;
+  const blog = await getBlog(slug);
 
   if (!blog) {
     notFound();
