@@ -125,7 +125,7 @@ export default async function BlogsPage() {
             HR Posting Partner Blog
           </span>
           <h1 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">
-            Insights, hiring tips, and updates for modern recruiters
+            Job Seeking, Career and HR Insights
           </h1>
           <p className="mt-3 text-base text-gray-600 sm:text-lg">
             Browse our latest articles by category. Each section highlights up to
