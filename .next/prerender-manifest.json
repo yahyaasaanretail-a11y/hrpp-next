@@ -31,7 +31,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/contact-us": {
+    "/open-platforms": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -44,56 +44,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/contact-us",
-      "dataRoute": "/contact-us.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/advertise-with-us": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/advertise-with-us",
-      "dataRoute": "/advertise-with-us.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/about-us": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/about-us",
-      "dataRoute": "/about-us.rsc",
+      "srcRoute": "/open-platforms",
+      "dataRoute": "/open-platforms.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -127,7 +79,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/privacy-policy": {
+    "/blogs": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -139,9 +91,10 @@
           "value": "multipart/form-data;.*"
         }
       ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/privacy-policy",
-      "dataRoute": "/privacy-policy.rsc",
+      "initialRevalidateSeconds": 300,
+      "initialExpireSeconds": 31536000,
+      "srcRoute": "/blogs",
+      "dataRoute": "/blogs.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -166,30 +119,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/special-presence-job-ads",
       "dataRoute": "/special-presence-job-ads.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/open-platforms": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/open-platforms",
-      "dataRoute": "/open-platforms.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -324,7 +253,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/jobs-in-karachi": {
+    "/advertise-with-us": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -337,32 +266,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/jobs-in-karachi",
-      "dataRoute": "/jobs-in-karachi.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/jobs-in-lahore": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/jobs-in-lahore",
-      "dataRoute": "/jobs-in-lahore.rsc",
+      "srcRoute": "/advertise-with-us",
+      "dataRoute": "/advertise-with-us.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -420,7 +325,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/jobs-internships-for-non-experienced": {
+    "/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -433,8 +338,56 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/jobs-internships-for-non-experienced",
-      "dataRoute": "/jobs-internships-for-non-experienced.rsc",
+      "srcRoute": "/privacy-policy",
+      "dataRoute": "/privacy-policy.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/jobs-in-pakistan": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/jobs-in-pakistan",
+      "dataRoute": "/jobs-in-pakistan.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/jobs-in-lahore": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/jobs-in-lahore",
+      "dataRoute": "/jobs-in-lahore.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -468,6 +421,54 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/jobs-internships-for-non-experienced": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/jobs-internships-for-non-experienced",
+      "dataRoute": "/jobs-internships-for-non-experienced.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/about-us": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/about-us",
+      "dataRoute": "/about-us.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/": {
       "experimentalBypassFor": [
         {
@@ -492,32 +493,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blogs": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": 300,
-      "initialExpireSeconds": 31536000,
-      "srcRoute": "/blogs",
-      "dataRoute": "/blogs.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/jobs-in-pakistan": {
+    "/jobs-in-karachi": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -530,8 +506,32 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/jobs-in-pakistan",
-      "dataRoute": "/jobs-in-pakistan.rsc",
+      "srcRoute": "/jobs-in-karachi",
+      "dataRoute": "/jobs-in-karachi.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/contact-us": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/contact-us",
+      "dataRoute": "/contact-us.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -571,8 +571,8 @@
   },
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "da1040cc9cfc03fa4ae705fbe99904be",
-    "previewModeSigningKey": "63cf2207bee8b65a740c23b167a8263386cb765bcfcc8b51db526cbc3727154e",
-    "previewModeEncryptionKey": "64ed9a54940c91797afb20651c284f119b7604e2dffc95fa5b35a188ca3d253c"
+    "previewModeId": "eb5433c09598bb2c9a41f81cda5915b7",
+    "previewModeSigningKey": "cd878245dd3ea439b5af73d9128008edd69310cc40ebf7899b4a2829fb4ea004",
+    "previewModeEncryptionKey": "66686c12b370c4c8c7b80e518b2f39763dd8fb0b40303172ec8f5db4e02b4481"
   }
 }
