@@ -25,13 +25,6 @@
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/app/sitemap.xml/route-9e250e5379955e9b.js"
     ],
-    "/advertise-with-us/page": [
-      "static/chunks/webpack-ec92258efcfa4adc.js",
-      "static/chunks/4bd1b696-86bb42566a9ab061.js",
-      "static/chunks/684-e4263c6379cedc8a.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/app/advertise-with-us/page-157af8b08d7129a2.js"
-    ],
     "/about-us/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
       "static/chunks/4bd1b696-86bb42566a9ab061.js",
@@ -39,6 +32,13 @@
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/63-7931116f2edcb599.js",
       "static/chunks/app/about-us/page-0ba8da8f57e843f9.js"
+    ],
+    "/advertise-with-us/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/app/advertise-with-us/page-157af8b08d7129a2.js"
     ],
     "/contact-us/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
@@ -86,15 +86,6 @@
       "static/chunks/336-caad1e78730496a3.js",
       "static/chunks/app/classified-jobs/[slug]/page-9a8ea49d88a488f0.js"
     ],
-    "/blogs/page": [
-      "static/chunks/webpack-ec92258efcfa4adc.js",
-      "static/chunks/4bd1b696-86bb42566a9ab061.js",
-      "static/chunks/684-e4263c6379cedc8a.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-7931116f2edcb599.js",
-      "static/chunks/874-f2d86a17a1298e49.js",
-      "static/chunks/app/blogs/page-3294c90fb29d3fb6.js"
-    ],
     "/blogs/categories/[slug]/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
       "static/chunks/4bd1b696-86bb42566a9ab061.js",
@@ -114,6 +105,15 @@
       "static/chunks/510-de99a043cfc8e1ff.js",
       "static/chunks/app/classified-jobs/page-472aa671ba16e40e.js"
     ],
+    "/jobs-in-faisalabad/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/jobs-in-faisalabad/page-5c61a3daef157333.js"
+    ],
     "/classified-jobs/page/[page]/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
       "static/chunks/4bd1b696-86bb42566a9ab061.js",
@@ -121,6 +121,15 @@
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/classified-jobs/page/[page]/page-ee599d432a475ed2.js"
+    ],
+    "/jobs-in-lahore/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/jobs-in-lahore/page-2a2502e08713ee6e.js"
     ],
     "/jobs-in-islamabad-rawalpindi/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
@@ -131,15 +140,6 @@
       "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-in-islamabad-rawalpindi/page-88aac87eb8bfae07.js"
     ],
-    "/jobs-in-faisalabad/page": [
-      "static/chunks/webpack-ec92258efcfa4adc.js",
-      "static/chunks/4bd1b696-86bb42566a9ab061.js",
-      "static/chunks/684-e4263c6379cedc8a.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-7931116f2edcb599.js",
-      "static/chunks/874-f2d86a17a1298e49.js",
-      "static/chunks/app/jobs-in-faisalabad/page-5c61a3daef157333.js"
-    ],
     "/jobs-in-karachi/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
       "static/chunks/4bd1b696-86bb42566a9ab061.js",
@@ -149,14 +149,14 @@
       "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-in-karachi/page-6f61c8e422918916.js"
     ],
-    "/jobs-in-lahore/page": [
+    "/blogs/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
       "static/chunks/4bd1b696-86bb42566a9ab061.js",
       "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/63-7931116f2edcb599.js",
       "static/chunks/874-f2d86a17a1298e49.js",
-      "static/chunks/app/jobs-in-lahore/page-2a2502e08713ee6e.js"
+      "static/chunks/app/blogs/page-3294c90fb29d3fb6.js"
     ],
     "/jobs-in-pakistan/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
@@ -185,15 +185,6 @@
       "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-internships-for-non-experienced/page-459091177cba1ab7.js"
     ],
-    "/remote-jobs-for-pakistan/page": [
-      "static/chunks/webpack-ec92258efcfa4adc.js",
-      "static/chunks/4bd1b696-86bb42566a9ab061.js",
-      "static/chunks/684-e4263c6379cedc8a.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-7931116f2edcb599.js",
-      "static/chunks/874-f2d86a17a1298e49.js",
-      "static/chunks/app/remote-jobs-for-pakistan/page-0c70373f53bddf14.js"
-    ],
     "/page": [
       "static/chunks/webpack-ec92258efcfa4adc.js",
       "static/chunks/4bd1b696-86bb42566a9ab061.js",
@@ -203,6 +194,15 @@
       "static/chunks/63-7931116f2edcb599.js",
       "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/page-0cbc078dc66630da.js"
+    ],
+    "/remote-jobs-for-pakistan/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/remote-jobs-for-pakistan/page-0c70373f53bddf14.js"
     ]
   }
 }
