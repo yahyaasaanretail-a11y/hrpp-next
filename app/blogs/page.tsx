@@ -91,7 +91,10 @@ export default async function BlogsPage() {
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {categories.map((category) => {
-              const postsToDisplay = category.posts.slice(0, 3);
+              const posts = Array.isArray(category.posts)
+                ? category.posts
+                : [];
+              const postsToDisplay = posts.slice(0, 3);
               const initials = (
                 category.name ||
                 category.slug ||
@@ -99,6 +102,10 @@ export default async function BlogsPage() {
               )
                 .slice(0, 2)
                 .toUpperCase();
+              const categoryHref = category.slug
+                ? `/blogs/categories/${category.slug}`
+                : "/blogs";
+              const postsCount = posts.length;
 
               return (
                 <article
@@ -119,18 +126,20 @@ export default async function BlogsPage() {
 
                   <div className="flex flex-col gap-4 p-5">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
+                      <Link
+                        href={categoryHref}
+                        className="group flex items-center gap-3"
+                      >
                         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold uppercase text-blue-700">
                           {initials}
                         </span>
-                        <h2 className="text-lg font-semibold text-gray-900">
+                        <h2 className="text-lg font-semibold text-gray-900 transition group-hover:text-blue-700">
                           {category.name}
                         </h2>
-                      </div>
-                      {category.posts.length > 0 && (
+                      </Link>
+                      {postsCount > 0 && (
                         <span className="text-xs font-medium uppercase tracking-wide text-blue-600">
-                          {category.posts.length}{" "}
-                          {category.posts.length === 1 ? "post" : "posts"}
+                          {postsCount} {postsCount === 1 ? "post" : "posts"}
                         </span>
                       )}
                     </div>
@@ -150,7 +159,7 @@ export default async function BlogsPage() {
                             >
                               <span className="line-clamp-2">{post.title}</span>
                               <span className="text-xs text-blue-300 transition group-hover:translate-x-1">
-                                →
+                                &rarr;
                               </span>
                             </Link>
                             {post.published_at && (
@@ -162,6 +171,18 @@ export default async function BlogsPage() {
                         ))}
                       </ul>
                     )}
+
+                    {category.slug && (
+                      <div>
+                        <Link
+                          href={categoryHref}
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+                        >
+                          View all posts
+                          <span aria-hidden="true">&rarr;</span>
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </article>
               );
@@ -172,3 +193,4 @@ export default async function BlogsPage() {
     </div>
   );
 }
+
