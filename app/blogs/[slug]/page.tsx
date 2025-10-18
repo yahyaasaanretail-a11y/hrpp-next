@@ -68,6 +68,12 @@ interface SimilarCategoryBlog {
   } | null;
 }
 
+interface CategorySummary {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 const getBlog = cache(async (slug: string): Promise<BlogDetail | null> => {
   const res = await fetch(`${API_BASE_URL}/blogs/${slug}`, {
     next: { revalidate },
@@ -120,8 +126,6 @@ const getSimilarCategoryBlogs = cache(
       `${API_BASE_URL}/blogs/categories/${encodeURIComponent(categorySlug)}/latest`,
     );
 
-    console.log(url)
-
     if (excludeSlug) {
       url.searchParams.set("exclude", excludeSlug);
     }
@@ -141,6 +145,34 @@ const getSimilarCategoryBlogs = cache(
     const data = await res.json();
     const items = Array.isArray(data?.data) ? data.data : [];
     return items.slice(0, 5);
+  },
+);
+
+const getOtherCategories = cache(
+  async (categorySlug: string | null): Promise<CategorySummary[]> => {
+    const slug = categorySlug?.trim();
+
+    const url = new URL(
+      `${API_BASE_URL}/blogs/categories-excluding/${encodeURIComponent(slug || "all")}`,
+    );
+
+    const res = await fetch(url.toString(), {
+      next: { revalidate },
+    });
+
+    if (!res.ok) {
+      console.error(
+        `Failed to fetch categories excluding ${slug ?? "all"}`,
+        res.statusText,
+      );
+      return [];
+    }
+
+    const data = await res.json();
+
+    return Array.isArray(data?.data)
+      ? (data.data as CategorySummary[]).slice(0, 10)
+      : [];
   },
 );
 
@@ -226,10 +258,13 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
   }
 
   const latestBlogs = await getLatestBlogs(blog.slug);
-  const filteredLatestBlogs = latestBlogs.filter((item) => item.slug !== blog.slug);
+  const filteredLatestBlogs = latestBlogs.filter(
+    (item) => item.slug !== blog.slug,
+  );
   const similarCategoryBlogs = blog.category?.slug
     ? await getSimilarCategoryBlogs(blog.category.slug, blog.slug)
     : [];
+  const otherCategories = await getOtherCategories(blog.category?.slug ?? null);
   const similarCategoryHighlights = (() => {
     const highlights: Array<{
       categoryName: string;
@@ -244,8 +279,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
       if (seen.has(categorySlug)) {
         continue;
       }
-      console.log(item)
-      seen.add(categorySlug);
+        seen.add(categorySlug);
       highlights.push({
         categoryName: item?.title ?? "Related category",
         categorySlug: item?.slug ?? null,
@@ -409,52 +443,76 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                   Explore similar categories
                 </h2>
                 <ul className="mt-4 space-y-4">
-                  {similarCategoryHighlights.map(({ categoryName, categorySlug, representative }) => {
-                    const categoryHref = categorySlug
-                      ? `/blogs/categories/${categorySlug}`
-                      : `/blogs/${representative.slug}`;
-                    const publishedLabel = formatPublishedDate(representative);
+                  {similarCategoryHighlights.map(
+                    ({ categoryName, categorySlug, representative }) => {
+                      const categoryHref = categorySlug
+                        ? `/blogs/categories/${categorySlug}`
+                        : `/blogs/${representative.slug}`;
+                      const publishedLabel =
+                        formatPublishedDate(representative);
 
-                    return (
-                      <li
-                        key={`${categorySlug ?? representative.slug}`}
-                        className="group flex items-start gap-4 rounded-2xl bg-indigo-50/40 p-3 transition hover:bg-indigo-100/70"
-                      >
-                        {representative.image_url && (
-                          <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-indigo-100">
-                            <Image
-                              src={representative.image_url}
-                              alt={categoryName}
-                              fill
-                              className="object-cover"
-                              sizes="64px"
-                            />
-                          </div>
-                        )}
-                        <div className="flex min-w-0 flex-col gap-1">
-                          <Link
-                            href={categoryHref}
-                            className="text-sm font-semibold text-gray-900 transition group-hover:text-indigo-700"
-                          >
-                            {categoryName}
-                          </Link>
-                          <p className="line-clamp-2 text-xs text-gray-600">
-                            {representative.excerpt || representative.title}
-                          </p>
-                          <div className="flex items-center gap-3 text-[11px] text-gray-500">
-                            {publishedLabel && <span>{publishedLabel}</span>}
+                      return (
+                        <li
+                          key={`${categorySlug ?? representative.slug}`}
+                          className="group flex items-start gap-4 rounded-2xl bg-indigo-50/40 p-3 transition hover:bg-indigo-100/70"
+                        >
+                          {representative.image_url && (
+                            <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-indigo-100">
+                              <Image
+                                src={representative.image_url}
+                                alt={categoryName}
+                                fill
+                                className="object-cover"
+                                sizes="64px"
+                              />
+                            </div>
+                          )}
+                          <div className="flex min-w-0 flex-col gap-1">
                             <Link
                               href={categoryHref}
-                              className="inline-flex items-center gap-1 font-semibold text-indigo-600 transition hover:text-indigo-700"
+                              className="text-sm font-semibold text-gray-900 transition group-hover:text-indigo-700"
                             >
-                              View posts
-                              <span aria-hidden="true">→</span>
+                              {categoryName}
                             </Link>
+                            <p className="line-clamp-2 text-xs text-gray-600">
+                              {representative.excerpt || representative.title}
+                            </p>
+                            <div className="flex items-center gap-3 text-[11px] text-gray-500">
+                              {publishedLabel && <span>{publishedLabel}</span>}
+                              <Link
+                                href={categoryHref}
+                                className="inline-flex items-center gap-1 font-semibold text-indigo-600 transition hover:text-indigo-700"
+                              >
+                                View posts
+                                <span aria-hidden="true">→</span>
+                              </Link>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-                    );
-                  })}
+                        </li>
+                      );
+                    },
+                  )}
+                </ul>
+              </div>
+            )}
+
+            {otherCategories.length > 0 && (
+              <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Other categories
+                </h2>
+                <ul className="mt-4 space-y-2 text-sm font-medium text-gray-700">
+                  {otherCategories.map((category) => (
+                    <li key={category.id}>
+                      <Link
+                        href={`/blogs/categories/${category.slug}`}
+                        className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1.5 text-sm text-gray-700 transition hover:border-blue-200 hover:text-blue-700"
+                      >
+                        {category.name}
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
