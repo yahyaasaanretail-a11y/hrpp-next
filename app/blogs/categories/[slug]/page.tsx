@@ -195,13 +195,21 @@ export default async function BlogCategoryPage({
   return (
     <div className="bg-gray-50 pb-16 pt-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <nav className="text-sm text-blue-600">
-          <Link href="/blogs" className="font-semibold hover:text-blue-700">
-            Blogs
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <nav className="text-sm text-blue-600">
+            <Link href="/blogs" className="font-semibold hover:text-blue-700">
+              Blogs
+            </Link>
+            <span className="mx-2 text-gray-400">/</span>
+            <span className="font-medium text-gray-500">{category.name}</span>
+          </nav>
+          <Link
+            href="/blogs"
+            className="inline-flex items-center gap-2 self-start rounded-full border border-blue-200 bg-blue-50 px-5 py-2 text-sm font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-100 sm:self-auto"
+          >
+            ← Back to all blogs
           </Link>
-          <span className="mx-2 text-gray-400">/</span>
-          <span className="font-medium text-gray-500">{category.name}</span>
-        </nav>
+        </div>
 
         <header className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
