@@ -1,199 +1,208 @@
 {
   "pages": {
     "/_not-found/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/app/_not-found/page-563ff6d49705e62d.js"
+      "static/chunks/app/_not-found/page-2a6786df72e72570.js"
     ],
     "/layout": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/css/995bc85552446460.css",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/502-3f32c20beb75b147.js",
-      "static/chunks/app/layout-2321e9ceec101b43.js"
+      "static/css/03fb54db27f4bc12.css",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/502-dc56a165da8871ef.js",
+      "static/chunks/app/layout-7d7ea5e33ce6cf85.js"
     ],
     "/sitemap.xml/route": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/app/sitemap.xml/route-9e250e5379955e9b.js"
     ],
-    "/about-us/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/app/about-us/page-0ba8da8f57e843f9.js"
-    ],
     "/contact-us/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/app/contact-us/page-8bbc37d603f2d2dc.js"
     ],
+    "/special-presence-job-ads/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/app/special-presence-job-ads/page-a2b4bc30497bccce.js"
+    ],
+    "/about-us/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/app/about-us/page-0ba8da8f57e843f9.js"
+    ],
     "/advertise-with-us/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/app/advertise-with-us/page-157af8b08d7129a2.js"
     ],
     "/open-platforms/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/8e1d74a4-cb4e1ff36e51da5a.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/app/open-platforms/page-b3f6f92ecc09ecb0.js"
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/app/open-platforms/page-cbbe7c50d1763e8b.js"
     ],
     "/privacy-policy/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/app/privacy-policy/page-e12134f0f73f7ef4.js"
     ],
-    "/special-presence-job-ads/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+    "/blogs/[slug]/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/app/special-presence-job-ads/page-a851805e5b48d21b.js"
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/blogs/[slug]/page-c45ff435c3084065.js"
     ],
     "/terms-and-conditions/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/app/terms-and-conditions/page-a8641223c14fcae8.js"
     ],
-    "/classified-jobs/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/css/f0e03e1f9e5692d1.css",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/510-c652f5b16659bce4.js",
-      "static/chunks/app/classified-jobs/page-5b1f11ba6f150b48.js"
-    ],
     "/blogs/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/app/blogs/page-5c32b6db48268522.js"
-    ],
-    "/blogs/[slug]/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/app/blogs/[slug]/page-6eb2f32210de4fa9.js"
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/blogs/page-3294c90fb29d3fb6.js"
     ],
     "/classified-jobs/page/[page]/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/app/classified-jobs/page/[page]/page-1a65b9a45f7f3b57.js"
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/classified-jobs/page/[page]/page-ee599d432a475ed2.js"
     ],
-    "/jobs-in-islamabad-rawalpindi/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+    "/classified-jobs/[slug]/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/app/jobs-in-islamabad-rawalpindi/page-88aac87eb8bfae07.js"
+      "static/css/3564d3f14a3cbbc0.css",
+      "static/chunks/336-caad1e78730496a3.js",
+      "static/chunks/app/classified-jobs/[slug]/page-9a8ea49d88a488f0.js"
+    ],
+    "/classified-jobs/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/css/f0e03e1f9e5692d1.css",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/510-de99a043cfc8e1ff.js",
+      "static/chunks/app/classified-jobs/page-472aa671ba16e40e.js"
+    ],
+    "/blogs/categories/[slug]/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/blogs/categories/[slug]/page-3847aa164ba3fe76.js"
     ],
     "/jobs-in-karachi/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-in-karachi/page-6f61c8e422918916.js"
     ],
     "/jobs-in-faisalabad/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-in-faisalabad/page-5c61a3daef157333.js"
     ],
-    "/classified-jobs/[slug]/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+    "/jobs-in-islamabad-rawalpindi/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/css/3564d3f14a3cbbc0.css",
-      "static/chunks/336-3906e17a449fca1a.js",
-      "static/chunks/app/classified-jobs/[slug]/page-8b3e6e80ad1bc6df.js"
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/jobs-in-islamabad-rawalpindi/page-88aac87eb8bfae07.js"
     ],
     "/jobs-in-lahore/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-in-lahore/page-2a2502e08713ee6e.js"
     ],
     "/jobs-in-pakistan/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-in-pakistan/page-27f89c4a7a6059a3.js"
     ],
     "/jobs-internships-for-non-experienced/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
       "static/chunks/app/jobs-internships-for-non-experienced/page-459091177cba1ab7.js"
     ],
+    "/remote-jobs-for-pakistan/page": [
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
+      "static/chunks/main-app-ed1bcb1bae701547.js",
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/remote-jobs-for-pakistan/page-0c70373f53bddf14.js"
+    ],
     "/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
+      "static/chunks/webpack-ec92258efcfa4adc.js",
+      "static/chunks/4bd1b696-86bb42566a9ab061.js",
+      "static/chunks/684-e4263c6379cedc8a.js",
       "static/chunks/main-app-ed1bcb1bae701547.js",
       "static/chunks/8e1d74a4-cb4e1ff36e51da5a.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/app/page-30ad24eb8ba50942.js"
-    ],
-    "/remote-jobs-for-pakistan/page": [
-      "static/chunks/webpack-d01e875b88739db9.js",
-      "static/chunks/4bd1b696-e4d29eb639f10b8d.js",
-      "static/chunks/684-40fa2c73deb3e5d5.js",
-      "static/chunks/main-app-ed1bcb1bae701547.js",
-      "static/chunks/63-71371c21b01eb03a.js",
-      "static/chunks/874-6bc169d09733d9f4.js",
-      "static/chunks/app/remote-jobs-for-pakistan/page-0c70373f53bddf14.js"
+      "static/chunks/63-7931116f2edcb599.js",
+      "static/chunks/874-f2d86a17a1298e49.js",
+      "static/chunks/app/page-0cbc078dc66630da.js"
     ]
   }
 }

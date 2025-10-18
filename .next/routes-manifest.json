@@ -15,6 +15,14 @@
   "headers": [],
   "dynamicRoutes": [
     {
+      "page": "/blogs/categories/[slug]",
+      "regex": "^/blogs/categories/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/blogs/categories/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/blogs/[slug]",
       "regex": "^/blogs/([^/]+?)(?:/)?$",
       "routeKeys": {
