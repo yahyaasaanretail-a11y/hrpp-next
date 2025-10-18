@@ -46,6 +46,21 @@ interface BlogCategory {
   posts: BlogSummary[];
 }
 
+interface FeaturedBlog {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  image_url?: string | null;
+  published_at?: string | null;
+  published_at_readable?: string | null;
+  category?: {
+    id: number;
+    name: string;
+    slug: string;
+  } | null;
+}
+
 async function getCategories(): Promise<BlogCategory[]> {
   const res = await fetch(`${API_BASE_URL}/blogs/categories`, {
     next: { revalidate },
@@ -60,8 +75,47 @@ async function getCategories(): Promise<BlogCategory[]> {
   return Array.isArray(data?.data) ? data.data : [];
 }
 
+async function getFeaturedBlogs(): Promise<FeaturedBlog[]> {
+  const res = await fetch(`${API_BASE_URL}/blogs/featured`, {
+    next: { revalidate },
+  });
+
+  if (!res.ok) {
+    console.error("Failed to fetch featured blogs", res.statusText);
+    return [];
+  }
+
+  const data = await res.json();
+  return Array.isArray(data?.data) ? data.data : [];
+}
+
+function formatPublishedDate(
+  post: Pick<FeaturedBlog, "published_at" | "published_at_readable">,
+): string | null {
+  if (post.published_at_readable) {
+    return post.published_at_readable;
+  }
+
+  if (post.published_at) {
+    const parsed = new Date(post.published_at);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    }
+  }
+
+  return null;
+}
+
 export default async function BlogsPage() {
-  const categories = await getCategories();
+  const [featuredBlogs, categories] = await Promise.all([
+    getFeaturedBlogs(),
+    getCategories(),
+  ]);
+  const featuredToDisplay = featuredBlogs.slice(0, 3);
 
   return (
     <div className="bg-gray-50">
@@ -84,12 +138,107 @@ export default async function BlogsPage() {
           <BlogSearch />
         </div>
 
+        {featuredToDisplay.length > 0 && (
+          <div className="mx-auto mt-12 max-w-6xl">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                  Featured insights
+                </h2>
+                <p className="mt-2 text-sm text-gray-600 sm:text-base">
+                  Catch up on our latest highlighted articles, curated by the
+                  editorial team.
+                </p>
+              </div>
+              <Link
+                href="/blogs"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+              >
+                View all blogs
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredToDisplay.map((post) => {
+                const publishedLabel = formatPublishedDate(post);
+
+                return (
+                  <article
+                    key={post.id}
+                    className="flex h-full flex-col overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
+                  >
+                    {post.image_url && (
+                      <div className="relative aspect-[16/9] w-full">
+                        <Image
+                          src={post.image_url}
+                          alt={post.title}
+                          fill
+                          className="object-cover"
+                          sizes="(min-width: 1280px) 420px, (min-width: 1024px) 32vw, (min-width: 640px) 50vw, 100vw"
+                          priority
+                        />
+                      </div>
+                    )}
+                    <div className="flex flex-grow flex-col p-6">
+                      {post.category?.name && (
+                        <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700">
+                          {post.category.name}
+                        </span>
+                      )}
+                      <h3 className="mt-3 text-lg font-semibold text-gray-900">
+                        <Link
+                          href={`/blogs/${post.slug}`}
+                          className="hover:text-blue-700"
+                        >
+                          {post.title}
+                        </Link>
+                      </h3>
+                      {post.excerpt && (
+                        <p className="mt-3 line-clamp-3 text-sm text-gray-600">
+                          {post.excerpt}
+                        </p>
+                      )}
+                      <div className="mt-4 flex flex-1 items-end justify-between text-sm text-gray-500">
+                        {publishedLabel && (
+                          <span>Published {publishedLabel}</span>
+                        )}
+                        <Link
+                          href={`/blogs/${post.slug}`}
+                          className="inline-flex items-center gap-1 font-semibold text-blue-600 hover:text-blue-700"
+                        >
+                          Read more
+                          <span aria-hidden="true">&rarr;</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <div className="mx-auto mt-16 max-w-6xl">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+              Browse by category
+            </h2>
+            <span className="hidden text-sm text-gray-500 sm:inline">
+              Dive into topics tailored for recruiters and hiring teams.
+            </span>
+          </div>
+          <p className="mt-2 text-sm text-gray-600 sm:hidden">
+            Dive into topics tailored for recruiters and hiring teams.
+          </p>
+        </div>
+
         {categories.length === 0 ? (
           <p className="mt-12 text-center text-gray-500">
             Blogs are on their way. Please check back soon.
           </p>
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {categories.map((category) => {
               const posts = Array.isArray(category.posts)
                 ? category.posts
@@ -193,4 +342,3 @@ export default async function BlogsPage() {
     </div>
   );
 }
-
