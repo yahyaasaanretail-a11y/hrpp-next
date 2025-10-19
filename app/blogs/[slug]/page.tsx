@@ -74,6 +74,15 @@ interface CategorySummary {
   slug: string;
 }
 
+interface LatestJob {
+  id: number;
+  title: string;
+  slug: string;
+  short_description?: string | null;
+  posted_at?: string | null;
+  locations?: string[] | null;
+}
+
 const getBlog = cache(async (slug: string): Promise<BlogDetail | null> => {
   const res = await fetch(`${API_BASE_URL}/blogs/${slug}`, {
     next: { revalidate },
@@ -176,6 +185,20 @@ const getOtherCategories = cache(
   },
 );
 
+const getLatestJobs = cache(async (): Promise<LatestJob[]> => {
+  const res = await fetch(`${API_BASE_URL}/jobs/latest`, {
+    next: { revalidate },
+  });
+
+  if (!res.ok) {
+    console.error("Failed to fetch latest jobs", res.statusText);
+    return [];
+  }
+
+  const data = await res.json();
+  return Array.isArray(data?.data) ? (data.data as LatestJob[]).slice(0, 5) : [];
+});
+
 type BlogPageProps = {
   params: Promise<{ slug: string }>;
 };
@@ -249,6 +272,21 @@ function formatPublishedDate(
   return null;
 }
 
+function formatJobPostedDate(job: LatestJob): string | null {
+  if (job.posted_at) {
+    const parsed = new Date(job.posted_at);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    }
+  }
+
+  return null;
+}
+
 export default async function BlogDetailPage({ params }: BlogPageProps) {
   const { slug } = await params;
   const blog = await getBlog(slug);
@@ -265,6 +303,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
     ? await getSimilarCategoryBlogs(blog.category.slug, blog.slug)
     : [];
   const otherCategories = await getOtherCategories(blog.category?.slug ?? null);
+  const latestJobs = await getLatestJobs();
   const similarCategoryHighlights = (() => {
     const highlights: Array<{
       categoryName: string;
@@ -513,6 +552,55 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                       </Link>
                     </li>
                   ))}
+                </ul>
+              </div>
+            )}
+
+            {latestJobs.length > 0 && (
+              <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Latest jobs
+                </h2>
+                <ul className="mt-4 space-y-4">
+                  {latestJobs.map((job) => {
+                    const postedLabel = formatJobPostedDate(job);
+                    const location =
+                      Array.isArray(job.locations) && job.locations.length > 0
+                        ? job.locations[0]
+                        : null;
+
+                    return (
+                      <li
+                        key={job.id}
+                        className="rounded-2xl border border-gray-100 bg-gray-50 p-4 transition hover:border-blue-200 hover:bg-blue-50"
+                      >
+                        <div className="flex flex-col gap-2">
+                          <Link
+                            href={`/classified-jobs/${job.slug}`}
+                            className="text-sm font-semibold text-gray-900 transition hover:text-blue-700"
+                          >
+                            {job.title}
+                          </Link>
+                          {job.short_description && (
+                            <p className="line-clamp-3 text-xs text-gray-600">
+                              {job.short_description}
+                            </p>
+                          )}
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-gray-500">
+                            {location && <span>{location}</span>}
+                            {postedLabel && <span>Posted {postedLabel}</span>}
+                            <Link
+                              href={`/classified-jobs/${job.slug}`}
+                              className="inline-flex items-center gap-1 font-semibold text-blue-600 transition hover:text-blue-700"
+                            >
+                              View job
+                              <span aria-hidden="true">&rarr;</span>
+                            </Link>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}
