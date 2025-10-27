@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cache } from "react";
+import { cache, Fragment } from "react";
 
+import { ArrowLeft } from "lucide-react";
 import BlogShareButton from "@/components/BlogShareButton";
+import InArticleAd from "@/components/InArticleAd";
 
 const API_BASE_URL = "https://admin.hrpostingpartner.com/api";
 
@@ -199,6 +201,41 @@ const getLatestJobs = cache(async (): Promise<LatestJob[]> => {
   return Array.isArray(data?.data) ? (data.data as LatestJob[]).slice(0, 5) : [];
 });
 
+const AD_MARKER = "<!--IN_ARTICLE_AD_MARKER-->";
+
+function injectAdMarker(
+  html: string | null | undefined,
+  marker: string,
+  paragraphTarget = 2,
+): string {
+  if (!html) {
+    return "";
+  }
+
+  const closingParagraphTag = "</p>";
+  let searchIndex = 0;
+  let occurrences = 0;
+
+  while (occurrences < paragraphTarget) {
+    const foundIndex = html.indexOf(closingParagraphTag, searchIndex);
+
+    if (foundIndex === -1) {
+      return html;
+    }
+
+    occurrences += 1;
+
+    if (occurrences === paragraphTarget) {
+      const insertPosition = foundIndex + closingParagraphTag.length;
+      return `${html.slice(0, insertPosition)}${marker}${html.slice(insertPosition)}`;
+    }
+
+    searchIndex = foundIndex + closingParagraphTag.length;
+  }
+
+  return html;
+}
+
 type BlogPageProps = {
   params: Promise<{ slug: string }>;
 };
@@ -333,23 +370,55 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
     blog.seo?.canonical_url ||
     `https://www.hrpostingpartner.com/blogs/${blog.slug}`;
   const formattedDate = formatPublishedDate(blog);
+  const categoryHref = blog.category?.slug
+    ? `/blogs/categories/${blog.category.slug}`
+    : "/blogs";
+  const shouldShowCategoryBackLink = Boolean(blog.category?.slug);
+  const categoryLabel = blog.category?.name ?? "Blogs";
+  const contentWithMarker = injectAdMarker(blog.content_html, AD_MARKER);
+  const rawContentSections = contentWithMarker.split(AD_MARKER);
+  const nonEmptySections = rawContentSections.filter(
+    (section) => section.trim().length > 0,
+  );
+  const effectiveSections =
+    nonEmptySections.length > 0
+      ? nonEmptySections
+      : [blog.content_html ?? ""];
+  const hasMarkerInserted =
+    rawContentSections.length > 1 && nonEmptySections.length > 0;
+  const adInsertionIndex =
+    hasMarkerInserted && effectiveSections.length > 0
+      ? 1
+      : effectiveSections.length;
 
   return (
     <article className="bg-gray-50 pb-16 pt-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <nav className="text-sm text-blue-600">
-          <Link href="/blogs" className="font-semibold hover:text-blue-700">
-            Blogs
-          </Link>
-          {blog.category?.name && (
-            <>
-              <span className="mx-2 text-gray-400">/</span>
-              <span className="font-medium text-gray-500">
-                {blog.category.name}
-              </span>
-            </>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <nav className="text-sm text-blue-600">
+            <Link href="/blogs" className="font-semibold hover:text-blue-700">
+              Blogs
+            </Link>
+            {blog.category?.name && (
+              <>
+                <span className="mx-2 text-gray-400">/</span>
+                <span className="font-medium text-gray-500">
+                  {blog.category.name}
+                </span>
+              </>
+            )}
+          </nav>
+
+          {shouldShowCategoryBackLink && (
+            <Link
+              href={categoryHref}
+              className="inline-flex items-center gap-2 self-start rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50 hover:text-blue-700 sm:self-auto"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Back to {categoryLabel}
+            </Link>
           )}
-        </nav>
+        </div>
 
         <h1 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl">
           {blog.title}
@@ -404,10 +473,25 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
             )}
 
             <div className="rounded-3xl bg-white p-6 shadow-sm sm:p-10">
-              <div
-                className="space-y-6 text-base leading-7 text-gray-700 [&_h2]:mt-10 [&_h2]:text-2xl [&_h3]:mt-8 [&_h3]:text-xl [&_img]:rounded-lg [&_img]:shadow [&_p]:text-gray-700 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"
-                dangerouslySetInnerHTML={{ __html: blog.content_html }}
-              />
+              <div className="space-y-6 text-base leading-7 text-gray-700 [&_h2]:mt-10 [&_h2]:text-2xl [&_h3]:mt-8 [&_h3]:text-xl [&_img]:rounded-lg [&_img]:shadow [&_p]:text-gray-700 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6">
+                {effectiveSections.map((section, index) => {
+                  const shouldRenderContent = section.trim().length > 0;
+                  const shouldRenderAd = index === adInsertionIndex - 1;
+
+                  return (
+                    <Fragment key={`blog-section-${index}`}>
+                      {shouldRenderContent && (
+                        <div
+                          dangerouslySetInnerHTML={{ __html: section }}
+                        />
+                      )}
+                      {shouldRenderAd && (
+                        <InArticleAd className="rounded-2xl border border-gray-100 bg-gray-50 p-4" />
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="flex justify-center">
@@ -604,6 +688,54 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                 </ul>
               </div>
             )}
+
+            <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+              <h2 className="text-lg font-semibold text-gray-900">
+                Follow other platforms for jobs
+              </h2>
+              <p className="mt-3 text-sm text-gray-600">
+                Stay connected for daily job alerts across our official channels.
+              </p>
+              <ul className="mt-5 space-y-4 text-sm text-gray-700">
+                <li>
+                  <p className="font-medium text-gray-800">
+                    Main WhatsApp Channel
+                  </p>
+                  <a
+                    href="https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all text-blue-600 underline hover:text-blue-800"
+                  >
+                    https://whatsapp.com/channel/0029VaRWeF7DDmFRZuX0Ww0K
+                  </a>
+                </li>
+                <li>
+                  <p className="font-medium text-gray-800">
+                    Continuous Individual Job Ads → HRPP 2.0 WAC
+                  </p>
+                  <a
+                    href="https://whatsapp.com/channel/0029VbAxrB572WTxgZBSbp1I"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all text-blue-600 underline hover:text-blue-800"
+                  >
+                    https://whatsapp.com/channel/0029VbAxrB572WTxgZBSbp1I
+                  </a>
+                </li>
+                <li>
+                  <p className="font-medium text-gray-800">LinkedIn Page</p>
+                  <a
+                    href="https://www.linkedin.com/company/hr-posting-partner/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all text-blue-600 underline hover:text-blue-800"
+                  >
+                    https://www.linkedin.com/company/hr-posting-partner/
+                  </a>
+                </li>
+              </ul>
+            </div>
           </aside>
         </div>
       </div>

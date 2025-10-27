@@ -1,13 +1,22 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Facebook, Linkedin, Phone, ChevronRight } from 'lucide-react';
 
+type BlogCategory = {
+  id: number;
+  name: string;
+  slug: string;
+  total_posts: number;
+};
+
 export default function Footer() {
+  const [topCategories, setTopCategories] = useState<BlogCategory[]>([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const services = [
     { name: 'Classified Jobs', href: '/classified-jobs' },
-    { name: 'Blogs', href: '/blogs' },
     { name: 'Advertise with Us', href: '/advertise-with-us' },
     { name: 'Special Presence Job Ads', href: '/special-presence-job-ads' },
     { name: 'Open Platforms', href: '/open-platforms' },
@@ -25,9 +34,44 @@ export default function Footer() {
     { name: 'About Us', href: '/about-us' },
   ];
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadCategories = async () => {
+      try {
+        const response = await fetch(
+          'https://admin.hrpostingpartner.com/api/blogs/categories/top',
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch top categories: ${response.status}`);
+        }
+
+        const payload = await response.json();
+
+        if (Array.isArray(payload?.data)) {
+          setTopCategories(payload.data.slice(0, 5));
+        }
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) {
+          console.error('Unable to load blog categories for footer.', error);
+        }
+      } finally {
+        setIsLoadingCategories(false);
+      }
+    };
+
+    loadCategories();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
         {/* Logo Section */}
         <div className="space-y-6">
           <div className="flex items-center space-x-3">
@@ -132,6 +176,33 @@ export default function Footer() {
             ))}
           </ul>
         </div>
+
+        {(isLoadingCategories || topCategories.length > 0) && (
+          <div className="space-y-6">
+            <h4 className="text-lg font-semibold relative">
+              Blog Top Categories
+              <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-purple-500 rounded-full"></div>
+            </h4>
+            <ul className="space-y-3">
+              {topCategories.map((category) => (
+                <li key={category.id}>
+                  <a
+                    href={`/blogs/categories/${category.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center text-gray-300 hover:text-white text-sm transition"
+                  >
+                    <ChevronRight size={14} className="mr-2 text-gray-500 group-hover:text-purple-400 transition" />
+                    <span>{category.name}</span>
+                  </a>
+                </li>
+              ))}
+              {!isLoadingCategories && topCategories.length === 0 && (
+                <li className="text-gray-500 text-sm">No categories available.</li>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Copyright */}
