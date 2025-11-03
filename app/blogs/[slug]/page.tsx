@@ -6,7 +6,6 @@ import { cache, Fragment } from "react";
 
 import { ArrowLeft } from "lucide-react";
 import BlogShareButton from "@/components/BlogShareButton";
-import InArticleAd from "@/components/InArticleAd";
 import AdUnit from "@/components/AdUnit";
 
 const API_BASE_URL = "https://admin.hrpostingpartner.com/api";
@@ -204,37 +203,195 @@ const getLatestJobs = cache(async (): Promise<LatestJob[]> => {
 
 const AD_MARKER = "<!--IN_ARTICLE_AD_MARKER-->";
 
-function injectAdMarker(
+type InsertAdMarkersResult = {
+  html: string;
+  insertedCount: number;
+};
+
+function insertAdMarkers(
   html: string | null | undefined,
   marker: string,
-  paragraphTarget = 2,
-): string {
+): InsertAdMarkersResult {
   if (!html) {
-    return "";
+    return { html: "", insertedCount: 0 };
   }
 
+  const paragraphMatches = Array.from(html.matchAll(/<\/p>/gi));
+  const paragraphTargets = getAdParagraphTargets(html, paragraphMatches);
+  const uniqueTargets = Array.from(new Set(paragraphTargets));
+
+  let updatedHtml = html;
+  let insertedCount = 0;
+
+  uniqueTargets
+    .sort((a, b) => b - a)
+    .forEach((paragraphIndex) => {
+      const result = insertMarkerAfterParagraph(updatedHtml, marker, paragraphIndex);
+      if (result.inserted) {
+        updatedHtml = result.html;
+        insertedCount += 1;
+      }
+    });
+
+  if (insertedCount === 0 && html.trim().length > 0) {
+    updatedHtml = `${html}${marker}`;
+    insertedCount = 1;
+  }
+
+  return { html: updatedHtml, insertedCount };
+}
+
+function getAdParagraphTargets(
+  html: string,
+  paragraphMatches: RegExpMatchArray[],
+): number[] {
+  const paragraphCount = paragraphMatches.length;
+
+  if (paragraphCount === 0) {
+    return [];
+  }
+
+  if (paragraphCount <= 4) {
+    return [paragraphCount];
+  }
+
+  const targets =
+    paragraphCount <= 7
+      ? [3, paragraphCount]
+      : [3, Math.min(6, paragraphCount - 2), paragraphCount - 1];
+
+  let normalizedTargets = targets
+    .map((target) => Math.max(2, Math.min(target, paragraphCount)))
+    .filter(
+      (target, index, self) =>
+        target >= 2 && target <= paragraphCount && self.indexOf(target) === index,
+    );
+
+  const firstHeadingMatch = /<h[1-6][^>]*>[\s\S]*?<\/h[1-6]>/i.exec(html);
+  if (firstHeadingMatch) {
+    const headingEnd = firstHeadingMatch.index + firstHeadingMatch[0].length;
+    const firstParagraphAfterHeadingIdx = paragraphMatches.findIndex(
+      (match) => (match.index ?? 0) > headingEnd,
+    );
+
+    if (firstParagraphAfterHeadingIdx !== -1) {
+      const minimumTarget = Math.min(paragraphCount, firstParagraphAfterHeadingIdx + 2);
+      normalizedTargets = normalizedTargets.map((target, index) => {
+        if (index === 0 && target <= minimumTarget - 1) {
+          return Math.min(paragraphCount, Math.max(minimumTarget, target + 1));
+        }
+        return target;
+      });
+    }
+  }
+
+  const minSpacing = 2;
+  const spacedTargets: number[] = [];
+
+  for (const target of normalizedTargets.sort((a, b) => a - b)) {
+    if (spacedTargets.length === 0) {
+      spacedTargets.push(target);
+      continue;
+    }
+
+    const lastTarget = spacedTargets[spacedTargets.length - 1];
+    let adjustedTarget = target;
+
+    if (adjustedTarget - lastTarget < minSpacing) {
+      const candidate = lastTarget + minSpacing;
+
+      if (candidate > paragraphCount) {
+        continue;
+      }
+
+      adjustedTarget = candidate;
+    }
+
+    if (!spacedTargets.includes(adjustedTarget)) {
+      spacedTargets.push(adjustedTarget);
+    }
+  }
+
+  if (spacedTargets.length === 0) {
+    spacedTargets.push(paragraphCount);
+  }
+
+  return spacedTargets;
+}
+
+function insertMarkerAfterParagraph(
+  html: string,
+  marker: string,
+  paragraphIndex: number,
+): { html: string; inserted: boolean } {
   const closingParagraphTag = "</p>";
   let searchIndex = 0;
-  let occurrences = 0;
+  let paragraphCounter = 0;
 
-  while (occurrences < paragraphTarget) {
-    const foundIndex = html.indexOf(closingParagraphTag, searchIndex);
+  while (searchIndex < html.length) {
+    const closingIndex = html.indexOf(closingParagraphTag, searchIndex);
 
-    if (foundIndex === -1) {
-      return html;
+    if (closingIndex === -1) {
+      break;
     }
 
-    occurrences += 1;
+    paragraphCounter += 1;
+    const insertPosition = closingIndex + closingParagraphTag.length;
 
-    if (occurrences === paragraphTarget) {
-      const insertPosition = foundIndex + closingParagraphTag.length;
-      return `${html.slice(0, insertPosition)}${marker}${html.slice(insertPosition)}`;
+    if (paragraphCounter === paragraphIndex) {
+      return {
+        html: `${html.slice(0, insertPosition)}${marker}${html.slice(insertPosition)}`,
+        inserted: true,
+      };
     }
 
-    searchIndex = foundIndex + closingParagraphTag.length;
+    searchIndex = insertPosition;
   }
 
-  return html;
+  return { html, inserted: false };
+}
+
+type PreparedContentSections = {
+  sections: string[];
+  adInsertionIndices: number[];
+};
+
+function prepareContentSections(
+  html: string | null | undefined,
+  marker: string,
+): PreparedContentSections {
+  if (!html) {
+    return { sections: [], adInsertionIndices: [] };
+  }
+
+  const { html: htmlWithMarkers } = insertAdMarkers(html, marker);
+  const rawSections = htmlWithMarkers.split(marker);
+
+  const sections: string[] = [];
+  const adInsertionIndices = new Set<number>();
+  let lastEffectiveIndex: number | null = null;
+
+  rawSections.forEach((rawSection, rawIndex) => {
+    const trimmedSection = rawSection.trim();
+
+    if (trimmedSection.length > 0) {
+      sections.push(rawSection);
+      lastEffectiveIndex = sections.length - 1;
+    }
+
+    if (rawIndex < rawSections.length - 1 && lastEffectiveIndex !== null) {
+      adInsertionIndices.add(lastEffectiveIndex);
+    }
+  });
+
+  if (sections.length === 0 && html.trim().length > 0) {
+    sections.push(html);
+  }
+
+  return {
+    sections,
+    adInsertionIndices: Array.from(adInsertionIndices).sort((a, b) => a - b),
+  };
 }
 
 type BlogPageProps = {
@@ -376,21 +533,9 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
     : "/blogs";
   const shouldShowCategoryBackLink = Boolean(blog.category?.slug);
   const categoryLabel = blog.category?.name ?? "Blogs";
-  const contentWithMarker = injectAdMarker(blog.content_html, AD_MARKER);
-  const rawContentSections = contentWithMarker.split(AD_MARKER);
-  const nonEmptySections = rawContentSections.filter(
-    (section) => section.trim().length > 0,
-  );
-  const effectiveSections =
-    nonEmptySections.length > 0
-      ? nonEmptySections
-      : [blog.content_html ?? ""];
-  const hasMarkerInserted =
-    rawContentSections.length > 1 && nonEmptySections.length > 0;
-  const adInsertionIndex =
-    hasMarkerInserted && effectiveSections.length > 0
-      ? 1
-      : effectiveSections.length;
+  const { sections: effectiveSections, adInsertionIndices } =
+    prepareContentSections(blog.content_html, AD_MARKER);
+  const adInsertionSet = new Set(adInsertionIndices);
 
   return (
     <article className="bg-gray-50 pb-16 pt-10">
@@ -471,7 +616,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               <div className="space-y-6 text-base leading-7 text-gray-700 [&_h2]:mt-10 [&_h2]:text-2xl [&_h3]:mt-8 [&_h3]:text-xl [&_img]:rounded-lg [&_img]:shadow [&_p]:text-gray-700 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6">
                 {effectiveSections.map((section, index) => {
                   const shouldRenderContent = section.trim().length > 0;
-                  const shouldRenderAd = index === adInsertionIndex - 1;
+                  const shouldRenderAd = adInsertionSet.has(index);
 
                   return (
                     <Fragment key={`blog-section-${index}`}>
@@ -481,8 +626,9 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                         />
                       )}
                       {shouldRenderAd && (
-                        // <InArticleAd className="rounded-2xl border border-gray-100 bg-gray-50 p-4" />
-                        <AdUnit slotId="8015069158"/>
+                        <div className="flex justify-center py-6">
+                          <AdUnit slotId="8015069158" />
+                        </div>
                       )}
                     </Fragment>
                   );
