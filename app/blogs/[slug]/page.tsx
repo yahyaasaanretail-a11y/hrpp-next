@@ -7,6 +7,7 @@ import { cache, Fragment } from "react";
 import { ArrowLeft } from "lucide-react";
 import BlogShareButton from "@/components/BlogShareButton";
 import InArticleAd from "@/components/InArticleAd";
+import AdUnit from "@/components/AdUnit";
 
 const API_BASE_URL = "https://admin.hrpostingpartner.com/api";
 
@@ -466,12 +467,6 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(260px,1fr)]">
           <div className="space-y-8">
-            {blog.excerpt && (
-              <p className="rounded-2xl bg-white p-6 text-lg font-medium text-gray-700 shadow-sm">
-                {blog.excerpt}
-              </p>
-            )}
-
             <div className="rounded-3xl bg-white p-6 shadow-sm sm:p-10">
               <div className="space-y-6 text-base leading-7 text-gray-700 [&_h2]:mt-10 [&_h2]:text-2xl [&_h3]:mt-8 [&_h3]:text-xl [&_img]:rounded-lg [&_img]:shadow [&_p]:text-gray-700 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6">
                 {effectiveSections.map((section, index) => {
@@ -486,7 +481,8 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                         />
                       )}
                       {shouldRenderAd && (
-                        <InArticleAd className="rounded-2xl border border-gray-100 bg-gray-50 p-4" />
+                        // <InArticleAd className="rounded-2xl border border-gray-100 bg-gray-50 p-4" />
+                        <AdUnit slotId="8015069158"/>
                       )}
                     </Fragment>
                   );
