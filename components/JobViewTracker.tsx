@@ -93,6 +93,11 @@ export default function JobViewTracker({
       const viewerId = viewerIdRef.current ?? getOrCreateViewerId();
       const payload = JSON.stringify({ viewerId });
 
+      console.log("[JobViewTracker] Sending view payload", {
+        jobId: resolvedJobId,
+        payload,
+      });
+
       if (
         typeof navigator.sendBeacon === "function" &&
         navigator.sendBeacon(
@@ -100,6 +105,9 @@ export default function JobViewTracker({
           new Blob([payload], { type: "application/json" })
         )
       ) {
+        console.log("[JobViewTracker] View recorded via sendBeacon", {
+          jobId: resolvedJobId,
+        });
         return;
       }
 
@@ -109,9 +117,25 @@ export default function JobViewTracker({
         body: payload,
         cache: "no-store",
         keepalive: true,
-      }).catch(() => {
-        // Intentionally ignore errors for fire-and-forget semantics.
-      });
+      })
+        .then(async (response) => {
+          let body: string | null = null;
+          try {
+            body = await response.clone().text();
+          } catch {
+            body = null;
+          }
+
+          console.log("[JobViewTracker] View POST response", {
+            jobId: resolvedJobId,
+            status: response.status,
+            ok: response.ok,
+            body,
+          });
+        })
+        .catch(() => {
+          // Intentionally ignore errors for fire-and-forget semantics.
+        });
     };
 
     const handleVisibilityChange = () => {
