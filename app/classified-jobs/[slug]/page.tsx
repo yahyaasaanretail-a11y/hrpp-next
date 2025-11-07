@@ -4,6 +4,7 @@ import ShareButton from "@/components/ShareButton";
 import JobImageSlider from "@/components/JobImageSlider";
 import AdUnit from "@/components/AdUnit";
 import SchemaMarkup from "@/components/SchemaMarkup";
+import JobViewTracker from "@/components/JobViewTracker";
 
 export const revalidate = 60;
 
@@ -42,6 +43,7 @@ export default async function Page({
 }) {
   const { slug } = await params;
   const job = await getJob(slug);
+  const jobId = job?.id ?? slug;
 
   const schema = {
     "@context": "https://schema.org",
@@ -75,11 +77,16 @@ export default async function Page({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-2">
-      <h1 className="text-3xl font-bold text-gray-800">{job.job_title}</h1>
-      <SchemaMarkup schema={schema} /> 
-      <ShareButton title={job.job_title} />
-    </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-bold text-gray-800">{job.job_title}</h1>
+          <JobViewTracker jobId={jobId} />
+        </div>
+        <div className="flex items-center gap-2">
+          <ShareButton title={job.job_title} />
+        </div>
+        <SchemaMarkup schema={schema} />
+      </div>
   
     <div className="space-y-2 text-sm text-gray-600 mb-6">
       <div className="flex items-center justify-between text-gray-600">
