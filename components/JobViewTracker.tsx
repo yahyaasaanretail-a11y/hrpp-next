@@ -134,6 +134,7 @@ export default function JobViewTracker({
         console.log("[JobViewTracker] View recorded via sendBeacon", {
           jobId: resolvedJobId,
         });
+        fetchViews();
         return;
       }
 
@@ -159,7 +160,7 @@ export default function JobViewTracker({
             body,
           });
 
-          if (response.ok && !isCancelled) {
+          if (!isCancelled) {
             fetchViews();
           }
         })
@@ -179,6 +180,7 @@ export default function JobViewTracker({
     };
 
     fetchViews();
+    sendView();
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("beforeunload", handleBeforeUnload);
 
