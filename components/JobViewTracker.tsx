@@ -133,9 +133,9 @@ export default function JobViewTracker({
         console.log("[JobViewTracker] View recorded via sendBeacon", {
           jobId: resolvedJobId,
         });
-        if (!isCancelled) {
-          fetchViews();
-        }
+        
+        fetchViews();
+        
         return;
       }
 
