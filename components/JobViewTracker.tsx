@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 const API_BASE_URL = "https://admin.hrpostingpartner.com/api";
 const VIEWER_ID_STORAGE_KEY = "hrrp_viewer_id";
 const BOT_REGEX = /bot|crawler|spider|preview|fetch/i;
+const VIEW_FETCH_TIMEOUT_MS = 4000;
 
 type JobViewTrackerProps = {
   jobId: number | string;
@@ -63,11 +64,20 @@ export default function JobViewTracker({
     const recordViewUrl = `${API_BASE_URL}/jobs/${resolvedJobId}/view`;
 
     const fetchViews = async (attempt = 1) => {
+      const controller = new AbortController();
+      let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
       try {
+        timeoutId = window.setTimeout(
+          () => controller.abort(),
+          VIEW_FETCH_TIMEOUT_MS
+        );
+
         const response = await fetch(viewCountUrl, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           cache: "no-store",
+          signal: controller.signal,
         });
 
         if (!response.ok) {
@@ -79,10 +89,26 @@ export default function JobViewTracker({
         if (!isCancelled) {
           setViews(typeof data?.views === "number" ? data.views : null);
         }
-      } catch {
-        if (attempt < 3 && !isCancelled) {
-          retryTimer = setTimeout(() => fetchViews(attempt + 1), 500 * attempt);
+      } catch (error) {
+        if (
+          error instanceof DOMException &&
+          error.name === "AbortError" &&
+          attempt < 3 &&
+          !isCancelled
+        ) {
+          // Immediately retry on timeout without additional delay.
+          fetchViews(attempt + 1);
+          return;
         }
+
+        if (attempt < 3 && !isCancelled) {
+          retryTimer = setTimeout(() => fetchViews(attempt + 1), 300 * attempt);
+        }
+      } finally {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        controller.abort();
       }
     };
 
@@ -132,6 +158,10 @@ export default function JobViewTracker({
             ok: response.ok,
             body,
           });
+
+          if (response.ok && !isCancelled) {
+            fetchViews();
+          }
         })
         .catch(() => {
           // Intentionally ignore errors for fire-and-forget semantics.
