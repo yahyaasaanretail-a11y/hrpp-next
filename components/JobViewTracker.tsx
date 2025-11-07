@@ -108,7 +108,6 @@ export default function JobViewTracker({
         if (timeoutId) {
           clearTimeout(timeoutId);
         }
-        controller.abort();
       }
     };
 
@@ -134,7 +133,9 @@ export default function JobViewTracker({
         console.log("[JobViewTracker] View recorded via sendBeacon", {
           jobId: resolvedJobId,
         });
-        fetchViews();
+        if (!isCancelled) {
+          fetchViews();
+        }
         return;
       }
 
@@ -147,10 +148,18 @@ export default function JobViewTracker({
       })
         .then(async (response) => {
           let body: string | null = null;
+          let nextViews: number | null = null;
+
           try {
             body = await response.clone().text();
+            if (body) {
+              const parsed = JSON.parse(body);
+              if (typeof parsed?.views === "number") {
+                nextViews = parsed.views;
+              }
+            }
           } catch {
-            body = null;
+            body = body ?? null;
           }
 
           console.log("[JobViewTracker] View POST response", {
@@ -161,11 +170,17 @@ export default function JobViewTracker({
           });
 
           if (!isCancelled) {
-            fetchViews();
+            if (typeof nextViews === "number") {
+              setViews(nextViews);
+            } else {
+              fetchViews();
+            }
           }
         })
         .catch(() => {
-          // Intentionally ignore errors for fire-and-forget semantics.
+          if (!isCancelled) {
+            fetchViews();
+          }
         });
     };
 
