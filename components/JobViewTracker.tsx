@@ -55,7 +55,7 @@ export default function JobViewTracker({
     hasRecordedViewRef.current = false;
 
     let isCancelled = false;
-    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+    let retryTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
 
     const resolvedJobId = String(jobId);
     viewerIdRef.current = getOrCreateViewerId();
@@ -65,10 +65,10 @@ export default function JobViewTracker({
 
     const fetchViews = async (attempt = 1) => {
       const controller = new AbortController();
-      let timeoutId: ReturnType<typeof setTimeout> | null = null;
+      let timeoutId: ReturnType<typeof globalThis.setTimeout> | null = null;
 
       try {
-        timeoutId = window.setTimeout(
+        timeoutId = globalThis.setTimeout(
           () => controller.abort(),
           VIEW_FETCH_TIMEOUT_MS
         );
@@ -102,11 +102,14 @@ export default function JobViewTracker({
         }
 
         if (attempt < 3 && !isCancelled) {
-          retryTimer = setTimeout(() => fetchViews(attempt + 1), 300 * attempt);
+          retryTimer = globalThis.setTimeout(
+            () => fetchViews(attempt + 1),
+            300 * attempt
+          );
         }
       } finally {
         if (timeoutId) {
-          clearTimeout(timeoutId);
+          globalThis.clearTimeout(timeoutId);
         }
       }
     };
@@ -201,7 +204,7 @@ export default function JobViewTracker({
 
     return () => {
       isCancelled = true;
-      if (retryTimer) clearTimeout(retryTimer);
+      if (retryTimer) globalThis.clearTimeout(retryTimer);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("beforeunload", handleBeforeUnload);
       sendView();
