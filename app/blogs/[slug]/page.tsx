@@ -602,7 +602,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                 src={blog.image_url}
                 alt={blog.title}
                 fill
-                className="object-cover"
+                className=""
                 sizes="(min-width: 1024px) 896px, 100vw"
                 priority
               />
